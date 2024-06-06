@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.keephealthy02.Mapper.FoodMapper">
+  <resultMap id="BaseResultMap" type="org.example.keephealthy02.Entity.Food">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="calories" jdbcType="REAL" property="calories" />
+  </resultMap>
+  <insert id="insert" parameterType="org.example.keephealthy02.Entity.Food">
+    insert into food (id, name, calories
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{calories,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.example.keephealthy02.Entity.Food">
+    insert into food
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="calories != null">
+        calories,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="calories != null">
+        #{calories,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>
