@@ -8,8 +8,7 @@ create table food
 
 create table user
 (
-    id                   varchar(10) not null comment '用户账号'
-        primary key,
+    id                   varchar(10) not null comment '用户账号' primary key,
     name                 varchar(10) not null comment '用户昵称',
     password             varchar(10) not null comment '密码',
     sex                  int         null comment '性别',
