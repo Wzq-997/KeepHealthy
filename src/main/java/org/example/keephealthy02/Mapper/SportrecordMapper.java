@@ -1,9 +1,9 @@
 package org.example.keephealthy02.Mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.example.keephealthy02.Entity.Sportrecord;
 
-public interface SportrecordMapper {
-    int insert(Sportrecord record);
-
-    int insertSelective(Sportrecord record);
+@Mapper
+public interface SportrecordMapper extends BaseMapper<Sportrecord> {
 }
