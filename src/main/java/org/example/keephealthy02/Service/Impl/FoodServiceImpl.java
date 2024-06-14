@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 public class FoodServiceImpl implements FoodService {
 
-    @Autowired
+    @Autowired(required=true)
     private FoodMapper foodMapper;
 
     @Override

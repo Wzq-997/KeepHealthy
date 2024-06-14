@@ -5,7 +5,7 @@ import org.example.keephealthy02.Entity.User;
 
 public interface UserService {
     Result register(User user);
-    Result login(String id, String password);
+    Result login(String name, String password);
     Result getUserById(String id);
     Result updateUser(User user);
     Result deleteUser(String id);

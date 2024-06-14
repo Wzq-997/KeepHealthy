@@ -23,8 +23,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result login(String id, String password) {
-        User user = userMapper.selectByPrimaryKey(id);
+    public Result login(String name, String password) {
+        // Note: If login is by name, then adjust the method and mapper accordingly
+        User user = userMapper.selectByPrimaryKey(name);
         if (user == null) {
             return Result.error("用户不存在");
         }

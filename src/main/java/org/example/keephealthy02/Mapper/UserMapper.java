@@ -1,10 +1,13 @@
 package org.example.keephealthy02.Mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.example.keephealthy02.Entity.User;
+import org.springframework.stereotype.Repository;
 
 @Mapper
-public interface UserMapper {
+@Repository
+public interface UserMapper extends BaseMapper<User> {
     int deleteByPrimaryKey(String id);
     int insert(User record);
     int insertSelective(User record);
