@@ -1,10 +1,10 @@
 import { createRouter, createWebHashHistory ,RouteRecordRaw} from "vue-router";
-import login from "../views/login.vue";
+import login from "@/views/login/login.vue";
 
 const routes = [
   {
     path: "/",
-    name: "登录",
+    name: "login",
     component: login
   },
   {
