@@ -44,18 +44,5 @@ public class LoginController {
             }
         }
         return Result.error("密码错误!");
-        //登录成功，生成令牌并下发令牌
-        //登录失败，返回错误信息
-//        if ("stulogin".equals(iden)) {
-//            Student student = stuservice.stuLogin(id, passwd);
-//            return student != null ? Result.success(student) : Result.error("登录失败！");
-//        } else if ("managerlogin".equals(iden)) {
-//            Manager manager = manService.manLogin(id, passwd);
-//            return manager != null ? Result.success(manager) : Result.error("登录失败！");
-//        } else {
-//            Employee employee = empService.empLogin(id, passwd);
-//            return employee != null ? Result.success(employee) : Result.error("登录失败！");
-//        }
-//    }
     }
 }
