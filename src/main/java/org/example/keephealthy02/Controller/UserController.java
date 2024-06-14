@@ -1,5 +1,6 @@
 package org.example.keephealthy02.Controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.example.keephealthy02.Entity.Result;
 import org.example.keephealthy02.Entity.User;
 import org.example.keephealthy02.Service.UserService;
@@ -21,13 +22,13 @@ public class UserController{
     public Result list(){
         return ResultUtil.success(this.userService.list());
     }*/
-
+    @ApiOperation(value = "修改")
     @PutMapping("/updateById")
     public Result updateById(@RequestBody User user){
         this.userService.updateById(user);
         return ResultUtil.success(user);
     }
-
+    @ApiOperation(value = "删除")
     @DeleteMapping("/deleteById/{id}")
     public Result deleteById(@PathVariable Serializable id){
 

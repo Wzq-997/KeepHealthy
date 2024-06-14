@@ -1,24 +1,28 @@
 package org.example.keephealthy02.Entity;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 public class User {
+    @ApiModelProperty(value = "用户唯一标识")
     private String id;
-
+    @ApiModelProperty(value = "用户名")
     private String name;
+    @ApiModelProperty(value = "密码")
 
     private String password;
-
+    @ApiModelProperty(value = "性别")
     private Integer sex;
-
+    @ApiModelProperty(value = "生日")
     private Date birthday;
-
+    @ApiModelProperty(value = "身高")
     private Float height;
-
+    @ApiModelProperty(value = "体重")
     private Float weight;
-
+    @ApiModelProperty(value = "目标体重")
     private String targetweight;
-
+    @ApiModelProperty(value = "既往病史")
     private String pastMedicalHistory;
 
     public String getId() {

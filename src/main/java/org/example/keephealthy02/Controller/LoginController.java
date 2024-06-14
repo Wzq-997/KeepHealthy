@@ -1,6 +1,8 @@
 package org.example.keephealthy02.Controller;
 
 import io.jsonwebtoken.Jwt;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.example.keephealthy02.Entity.Result;
 import org.example.keephealthy02.Entity.User;
@@ -18,10 +20,11 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping("/userLogin")
+@Api(value = "Swagger2 在线接口文档")
 public class LoginController {
     @Autowired
     private UserService userService;
-    
+    @ApiOperation(value = "登录")
     @PostMapping("/login")
     public Result login(@RequestParam Integer id,@RequestParam String password) {
 
@@ -59,15 +62,18 @@ public class LoginController {
 
 
     }
+    @ApiOperation(value = "获取全部")
     @GetMapping("/list")
     public Result list(){
         return ResultUtil.success(this.userService.list());
     }
+    @ApiOperation(value = "根据id查询")
     @GetMapping("/findById/{id}")
     public Result findById(@PathVariable("id") String id){
         User user = this.userService.getById(id);
         return ResultUtil.success(user);
     }
+    @ApiOperation(value = "增加")
     @PostMapping("/insert")
     public Result insert(@RequestBody User user){
         this.userService.save(user);
