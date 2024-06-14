@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class FoodServiceImpl implements FoodService {
 
-    @Autowired(required=true)
+    @Autowired
     private FoodMapper foodMapper;
 
     @Override
@@ -25,25 +26,21 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Food getFoodById(String id) {
-        // Assuming there is a method in FoodMapper to select food by id
         return foodMapper.selectFoodById(id);
     }
 
     @Override
     public List<Food> getAllFoods() {
-        // Assuming there is a method in FoodMapper to select all foods
         return foodMapper.selectAllFoods();
     }
 
     @Override
     public void updateFood(Food food) {
-        // Assuming there is a method in FoodMapper to update food
         foodMapper.updateFood(food);
     }
 
     @Override
     public void deleteFoodById(String id) {
-        // Assuming there is a method in FoodMapper to delete food by id
         foodMapper.deleteFoodById(id);
     }
 }
