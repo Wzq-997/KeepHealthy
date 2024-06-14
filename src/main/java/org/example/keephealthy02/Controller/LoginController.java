@@ -7,11 +7,9 @@ import org.example.keephealthy02.Entity.User;
 import org.example.keephealthy02.Mapper.UserMapper;
 import org.example.keephealthy02.Service.UserService;
 import org.example.keephealthy02.utils.JwtUtils;
+import org.example.keephealthy02.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,11 +17,11 @@ import java.util.Map;
 @Slf4j
 @RestController
 @CrossOrigin
+@RequestMapping("/userLogin")
 public class LoginController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserMapper userMapper;
+    
     @PostMapping("/login")
     public Result login(@RequestParam Integer id,@RequestParam String password) {
 
@@ -57,5 +55,23 @@ public class LoginController {
 //            return employee != null ? Result.success(employee) : Result.error("登录失败！");
 //        }
 //    }
+        //增加和查询
+
+
+    }
+    @GetMapping("/list")
+    public Result list(){
+        return ResultUtil.success(this.userService.list());
+    }
+    @GetMapping("/findById/{id}")
+    public Result findById(@PathVariable("id") String id){
+        User user = this.userService.getById(id);
+        return ResultUtil.success(user);
+    }
+    @PostMapping("/insert")
+    public Result insert(@RequestBody User user){
+        this.userService.save(user);
+        return ResultUtil.success(user);
+
     }
 }
