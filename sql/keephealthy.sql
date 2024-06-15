@@ -12,9 +12,9 @@ create table user
     name                 varchar(10) not null comment '用户昵称',
     password             varchar(10) not null comment '密码',
     sex                  int         null comment '性别',
-    birthday             date        not null comment '生日',
-    height               float       not null comment '身高',
-    weight               float       not null comment '体重',
+    birthday             date        null comment '生日',
+    height               float       null comment '身高',
+    weight               float       null comment '体重',
     targetweight         varchar(5)  null comment '目标体重',
     past_medical_history longtext    null comment '过往病史'
 );
