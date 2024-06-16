@@ -1,13 +1,12 @@
 package org.example.keephealthy02.Controller;
 
-import io.jsonwebtoken.Jwt;
 import io.swagger.annotations.Api;
-import lombok.extern.slf4j.Slf4j;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.example.keephealthy02.Entity.Result;
 import org.example.keephealthy02.Entity.User;
-import org.example.keephealthy02.Mapper.UserMapper;
 import org.example.keephealthy02.Service.Impl.UserServiceImpl;
-import org.example.keephealthy02.Service.UserService;
 import org.example.keephealthy02.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,9 +44,22 @@ public class LoginController {
      * @param id 用户输入的账户
      * @param password 用户输入的密码
      * @param response 用于构建和修改Http请求
-     * @return 结果：返回0，登录成功，同时携带token，返回1，登录失败
+     * @return 结果：返回1，登录成功，同时携带token，返回0，登录失败
      */
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    @ApiOperation(value = "登录",notes = "生成的token在headr的set-cookie下")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "id",
+                    value = "用户id",
+                    required = true
+            ),
+            @ApiImplicitParam(
+                    name = "password",
+                    value = "用户密码",
+                    required = true
+            )
+    })
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Result login(@RequestParam String id, @RequestParam String password, HttpServletResponse response){
         User user =  userServiceImpl.getuser(id);
         if(user != null && user.getPassword().equals(password)){// 生成 JWT
@@ -60,21 +72,26 @@ public class LoginController {
             cookie.setSecure(true);
             cookie.setPath("/");
             cookie.setMaxAge(1); // 设置 Cookie 的有效期为 1 小时
-            response.addCookie(cookie);
-
+           response.addCookie(cookie);
             // 创建一个新的响应对象，包含其他信息
             Map<String, Object> respones = new HashMap<>();
             respones.put("date", LocalDateTime.now());
-            return new Result(0,"登录成功", respones);
+            return new Result(1,"登录成功", respones);
         }
-        return new Result(1,"密码错误",LocalDateTime.now());
+        return new Result(0,"密码错误",LocalDateTime.now());
     }
 
     /**
      *
      * @param user user类对象
-     * @return 返回0 注册成功  返回1 注册失败，用户已存在
+     * @return 返回1 注册成功  返回0 注册失败，用户已存在
      */
+    @ApiOperation(value = "注册")
+    @ApiImplicitParam(
+            name = "user",
+            value = "用户",
+            required = true
+    )
     @RequestMapping(value = "/regist",method = RequestMethod.POST)
     public Result registe(@RequestBody User user) {
         // 检查用户是否已经存在
@@ -94,6 +111,7 @@ public class LoginController {
      * @param token 需要携带jwt进行验证
      * @return
      */
+    @ApiOperation(value = "验证用户是否已经登录成功")
     @RequestMapping(value = "/update",method = RequestMethod.PUT)
     public Result update(@RequestBody User user,HttpServletResponse response,@RequestHeader("Authorization") String token){
         // 检查用户是否登录，验证 JWT
@@ -117,34 +135,3 @@ public class LoginController {
         return new Result(0, "用户信息更新成功",LocalDateTime.now());
     }
 }
-
-//}
-//@Slf4j
-//@RestController
-//@CrossOrigin
-//public class LoginController {
-//    @Autowired
-//    private UserService userService;
-//    @Autowired
-//    private UserMapper userMapper;
-//    @PostMapping("/login")
-//    public Result login(@RequestParam String id,@RequestParam String password) {
-//
-//        User getuser = userService.getuser(id);
-//        if(getuser!=null)
-//        {
-////            登录成功
-//            if(getuser.getPassword().equals(password))
-//            {
-//                Map<String, Object> claims = new HashMap<>();
-//                claims.put("id",getuser.getId());
-//                claims.put("name",getuser.getName());
-//                claims.put("birthday",getuser.getBirthday());
-//                claims.put("targetweight",getuser.getTargetweight());
-//                claims.put("pastMedicalHistory", getuser.getPastMedicalHistory());
-//                String s = JwtUtils.generateJwt(claims);//当前登录的用户信息
-//                return Result.success(s);
-//            }
-//        }
-//        return Result.error("密码错误!");
-//    }
