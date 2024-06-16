@@ -1,0 +1,193 @@
+<template>
+  <el-container class="home_container">
+<!--    plus-->
+    <el-header class="home_header">
+      <div class="home_title">个人健康管理系统</div>
+      <div class="home_userinfoContainer">
+        <el-dropdown>
+        <span class="el-dropdown-link home_userinfo">
+          {{ admin.name }}<i class="el-icon-arrow-down el-icon--right home_userinfo"></i>
+        </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
+    </el-header>
+
+    <el-container>
+      <el-aside class="home_aside" width="200px">
+        <el-menu
+            router
+            default-active="2"
+            class="el-menu-vertical-demo"
+            @open="handleOpen"
+            @close="handleClose"
+
+        >
+          <el-submenu index="1">
+            <el-menu-item><h3 class="menu-title">--运动</h3></el-menu-item>
+<!--            <el-menu-item-group title="运动">-->
+                <el-menu-item index="/sportwords" :class="$route.path=='/sportwords'?'is-active':''">
+                  <el-icon><List /></el-icon>运动处方
+                </el-menu-item>
+                <el-menu-item index="/自主运动" :class="$route.path=='/自主运动'?'is-active':''">
+                  <el-icon><CopyDocument /></el-icon>自主运动
+                </el-menu-item>
+                <el-menu-item index="/更换处方" :class="$route.path=='/更换处方'?'is-active':''">
+                <el-icon><FolderRemove /></el-icon>更换处方
+              </el-menu-item>
+<!--            </el-menu-item-group>-->
+          </el-submenu>
+
+          <el-submenu index="2">
+            <el-menu-item><h3 class="menu-title">--健康</h3></el-menu-item>
+
+            <el-menu-item index="/饮食记录" :class="$route.path=='/饮食记录'?'is-active':''">
+              <el-icon><Bowl /></el-icon>饮食记录
+            </el-menu-item>
+            <el-menu-item index="/身体状态" :class="$route.path=='/身体状态'?'is-active':''">
+             <img src="../img/icon/person.png" class="icons">身体状态
+            </el-menu-item>
+            <el-menu-item index="/身体状态" :class="$route.path=='/身体状态'?'is-active':''">
+              <el-icon><Coordinate /></el-icon>健康常识
+            </el-menu-item>
+
+          </el-submenu>
+
+          <el-submenu index="3">
+            <el-menu-item><h3 class="menu-title">--进度</h3></el-menu-item>
+
+            <el-menu-item >
+              <i class="el-icon-folder-add"></i>今日完成度
+
+            </el-menu-item>
+            <el-menu-item>
+              <i class="el-icon-document-copy"></i>总完成度
+            </el-menu-item>
+          </el-submenu>
+          <el-submenu index="4">
+            <el-menu-item index="/我的"><h3 class="menu-title">--我的</h3></el-menu-item>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
+<!--      elementplus-->
+      <el-container>
+        <el-main>
+          <div class="main" style="margin-top:-20px">
+          <el-breadcrumb separator="→">
+            <el-breadcrumb-item :to="{ path: '/' }" style="margin-top:20px;margin-left: 10px">首页</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ name: $route.name }" style="margin-top:20px" v-if="$route.name">{{ $route.name }}</el-breadcrumb-item>
+            <!-- 注意：这里假设你的路由有name属性，如果没有，你可能需要展示其他信息或省略这一项 -->
+          </el-breadcrumb>
+
+          <router-view></router-view>
+          </div>
+        </el-main>
+
+      </el-container>
+
+    </el-container>
+
+  </el-container>
+</template>
+<script>
+import {List, Location} from "@element-plus/icons-vue";
+export default{
+  components: {List, Location},
+  methods: {
+
+    logout(){
+      let _this = this;
+      this.$confirm('注销登录吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        localStorage.removeItem('systemAdmin')
+        _this.$router.replace({path: '/login'})
+      })
+    },
+    handleOpen(key, keyPath) {
+      console.log('Menu opened:', key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log('Menu closed:', key, keyPath);
+    },
+
+  },
+
+  data(){
+    return {
+      admin:'',
+      percentage: 20
+    }
+  },
+  created() {
+    let admin = JSON.parse(window.localStorage.getItem('systemAdmin'))
+    this.admin = admin
+  },
+}
+</script>
+<style>
+.home_container {
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+.home_header {
+  background-color: #2B2B2B;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  //width: 90%;
+  //position: absolute;
+  //top: 0;
+  //right: 0;
+}
+
+.home_title {
+  color: #C2C2C2;
+  font-size: 22px;
+  display: inline;
+}
+
+.home_userinfo {
+  color: #fff;
+  cursor: pointer;
+}
+
+.home_userinfoContainer {
+  display: inline;
+  margin-right: 20px;
+}
+
+.home_aside {
+  background-color: #FFFFFF;
+}
+
+
+.menu-title{
+  color: #529b2e;
+}
+.icons{
+  width: 20px;
+  height: 20px;
+//position: absolute;
+  margin-right:8px;
+}
+.main{
+  background-color: white;
+  width: 100%;
+  height: 120%;
+}
+.demo-progress{
+  max-width: 100px;
+}
+</style>

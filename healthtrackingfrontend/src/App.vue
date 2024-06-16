@@ -1,12 +1,8 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <router-view></router-view>
 
-    </div>
   </div>
-  <router-view></router-view>
 </template>
-
-<style lang="scss">
-
-</style>
+<script setup>
+</script>
