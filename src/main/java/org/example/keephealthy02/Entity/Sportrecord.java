@@ -10,6 +10,15 @@ public class Sportrecord {
     private String userid;
 
     private String type;
+    private double lastTime;
+
+    public double getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(double lastTime) {
+        this.lastTime = lastTime;
+    }
 
     public Date getDate() {
         return date;

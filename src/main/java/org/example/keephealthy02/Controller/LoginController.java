@@ -1,6 +1,10 @@
 package org.example.keephealthy02.Controller;
 
 import io.jsonwebtoken.Jwt;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.example.keephealthy02.Entity.Result;
 import org.example.keephealthy02.Entity.User;
@@ -17,14 +21,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@RestController
 @CrossOrigin
+@Api(tags = "登录管理")
+@RestController
 public class LoginController {
     @Autowired
     private UserService userService;
     @Autowired
     private UserMapper userMapper;
     @PostMapping("/login")
+    @ApiOperation(value = "用户登录")
+    @ApiImplicitParams
+    (
+            {
+                    @ApiImplicitParam(
+                            name = "id",
+                            value = "用户id",
+                            required = true,
+                            paramType = "query"
+                    ) ,
+                    @ApiImplicitParam(
+                            name="password",
+                            value = "用户密码",
+                            required = true,
+                            paramType = "query"
+                    )
+            }
+    )
     public Result login(@RequestParam Integer id,@RequestParam String password) {
 
         User getuser = userService.getuser(id);
