@@ -1,5 +1,6 @@
 package org.example.keephealthy02.Service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.example.keephealthy02.Entity.SportType;
 import org.example.keephealthy02.Entity.Sportrecord;
 import org.example.keephealthy02.Entity.User;
@@ -24,7 +25,9 @@ public class SportRecordImpl implements SportRecordService {
     private UserMapper userMapper;
     @Override
     public List<Sportrecord> getSport(String userId) {
-        return null;
+        QueryWrapper<Sportrecord> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",userId);
+        return sportrecordMapper.selectList(queryWrapper);
     }
 
     @Override

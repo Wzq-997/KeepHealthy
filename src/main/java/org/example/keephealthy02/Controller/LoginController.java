@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/main")
 @Api(tags = "登录管理Api")
 public class LoginController {
     @Autowired
@@ -41,7 +41,7 @@ public class LoginController {
     }
     /**
      * login登录函数
-     * @param id 用户输入的账户
+     * @param userId 用户输入的账户
      * @param password 用户输入的密码
      * @param response 用于构建和修改Http请求
      * @return 结果：返回1，登录成功，同时携带token，返回0，登录失败
@@ -49,7 +49,7 @@ public class LoginController {
     @ApiOperation(value = "登录",notes = "生成的token在headr的set-cookie下")
     @ApiImplicitParams({
             @ApiImplicitParam(
-                    name = "id",
+                    name = "userId",
                     value = "用户id",
                     required = true
             ),
@@ -60,8 +60,8 @@ public class LoginController {
             )
     })
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public Result login(@RequestParam String id, @RequestParam String password, HttpServletResponse response){
-        User user =  userServiceImpl.getuser(id);
+    public Result login(@RequestParam String userId, @RequestParam String password, HttpServletResponse response){
+        User user =  userServiceImpl.getuser(userId);
         if(user != null && user.getPassword().equals(password)){// 生成 JWT
             String jwt = JwtUtils.generateJwt(generateClaim(user));//当前登录的用户信息
 
