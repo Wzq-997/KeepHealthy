@@ -8,12 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("food")
-public class Food {
-    private String id;
-
-    private String name;
-
-    private double calories;
-
+@TableName("sporttype")
+public class SportType {
+    private String sportId;
+    private String sportName;
+//    标准卡路里
+    private double singleCalorie;
 }

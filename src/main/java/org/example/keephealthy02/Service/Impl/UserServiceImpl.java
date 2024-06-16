@@ -1,33 +1,37 @@
 package org.example.keephealthy02.Service.Impl;
 
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.keephealthy02.Entity.User;
 import org.example.keephealthy02.Mapper.UserMapper;
-import org.example.keephealthy02.Service.Service;
+import org.example.keephealthy02.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@org.springframework.stereotype.Service
-public class UserServiceImpl implements Service<User> {
+import java.lang.annotation.Annotation;
+
+@Service
+public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements UserService {
     @Autowired
     private UserMapper userMapper;
 
     @Override
+    public User getuser(String id) {
+        return userMapper.selectById(id);
+    }
+    @Override
     public User selectById(String id) {
         return userMapper.selectById(id);
     }
-
     @Override
-    public int insert(User user) {
-        return userMapper.insert(user);
+    public void insert(User user) {
+        userMapper.insert(user);
     }
-
     @Override
-    public int update(User user) {
-        return userMapper.updateById(user);
+    public void update(User user) {
+        userMapper.update(user,null);
     }
-
-    @Override
-    public int deleteById(Long id) {
-        return 0;
-    }
+//    @Override
+//    public User getuser(int id) {
+//        return userMapper.selectById(id);
+//    }
 }

@@ -1,45 +1,21 @@
 package org.example.keephealthy02.Entity;
 
-import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.Date;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("healthyanalysis")
 public class Healthyanalysis {
     private Date date;
 
-    private String userid;
+    private String userId;
 
-    private Float bmi;
+    private double BMI;
 
-    private Integer healthlevel;
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid == null ? null : userid.trim();
-    }
-
-    public Float getBmi() {
-        return bmi;
-    }
-
-    public void setBmi(Float bmi) {
-        this.bmi = bmi;
-    }
-
-    public Integer getHealthlevel() {
-        return healthlevel;
-    }
-
-    public void setHealthlevel(Integer healthlevel) {
-        this.healthlevel = healthlevel;
-    }
+    private Integer healthLevel;
 }
