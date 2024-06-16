@@ -9,7 +9,7 @@ import java.util.Map;
 public class JwtUtils {
 
     private static String signKey = "nonine";
-    private static Long expire = 43200000L;//12小时
+    private static Long expire = 30000L;//12小时
 
     /**
      * 生成JWT令牌
@@ -36,5 +36,17 @@ public class JwtUtils {
                 .parseClaimsJws(jwt)
                 .getBody();
         return claims;
+    }
+
+    // 验证 token 是否过期
+    public static boolean isTokenExpired(String token) {
+        try {
+            Claims claims = parseJWT(token);
+
+            Date expiration = claims.getExpiration();
+            return expiration.before(new Date());
+        } catch (Exception e) {
+            return true; // 发生任何异常，认为 token 已过期
+        }
     }
 }

@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.southwind</groupId>
-	<artifactId>dormitoryms_springboot</artifactId>
+	<artifactId>KeepHealthy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dormitoryms_springboot</name>
 	<description>Demo project for Spring Boot</description>
