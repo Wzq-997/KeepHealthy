@@ -27,7 +27,7 @@ public class SleepServiceImpl implements SleepService {
 
     @Override
     public Sleep getSleepByUserIdAndDate(String userid, Date date) {
-        return sleepMapper.selectSleepByUserIdAndDate(userid, date);
+        return sleepMapper.selectSleepByUserIdAndDate(userid, (java.sql.Date) date);
     }
 
     @Override
@@ -42,6 +42,6 @@ public class SleepServiceImpl implements SleepService {
 
     @Override
     public void deleteSleepByUserIdAndDate(String userid, Date date) {
-        sleepMapper.deleteSleepByUserIdAndDate(userid, date);
+        sleepMapper.deleteSleepByUserIdAndDate(userid, (java.sql.Date) date);
     }
 }

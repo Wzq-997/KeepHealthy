@@ -27,7 +27,7 @@ public class UserdietServiceImpl implements UserdietService {
 
     @Override
     public int deleteUserdietById(String userid, Date date) {
-        return userdietMapper.deleteById(userid, date);
+        return userdietMapper.deleteById(userid, (java.sql.Date) date);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class UserdietServiceImpl implements UserdietService {
 
     @Override
     public Userdiet getUserdietById(String userid, Date date) {
-        return userdietMapper.selectById(userid, date);
+        return userdietMapper.selectById(userid, (java.sql.Date) date);
     }
 
     @Override
