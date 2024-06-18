@@ -1,26 +1,33 @@
-import { createRouter, createWebHistory ,RouteRecordRaw} from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import login from "../views/login.vue";
 import system from "@/views/system.vue";
-import sportwords from "../views/sportwords.vue"
+import sports from "../views/sports.vue";
+import sportwords from "../views/sportwords.vue";
+
 const routes = [
   {
     path: "/login",
     name: "登录",
-    component: login
+    component: login,
   },
-
 
   {
     path: "/",
     name: "系统",
-    component:system,
-    children:[
+    component: system,
+    redirect: "/sportwords",
+    children: [
       {
         path: "/sportwords",
         name: "运动处方",
-        component:sportwords
+        component: sportwords,
       },
-    ]
+      {
+        path: "/sports",
+        name: "自主运动",
+        component: sports,
+      },
+    ],
   },
 
   // {
@@ -34,7 +41,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 });
 
 export default router;
