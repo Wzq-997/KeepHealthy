@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -19,9 +20,9 @@ public class Sleep {
     private Integer timeQuantume;
 
 //    起床时间
-    private LocalDate weak;
+    private LocalDateTime weak;
 //  入睡
-    private LocalDate bed;
+    private LocalDateTime bed;
 
     private LocalDate date;
 
