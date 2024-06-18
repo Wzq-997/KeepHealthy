@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.keephealthy02.Mapper.SleepMapper">
+  <resultMap id="BaseResultMap" type="org.example.keephealthy02.Entity.Sleep">
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="timequantume" jdbcType="INTEGER" property="timequantume" />
+    <result column="weak" jdbcType="TIMESTAMP" property="weak" />
+    <result column="bed" jdbcType="TIMESTAMP" property="bed" />
+    <result column="date" jdbcType="DATE" property="date" />
+  </resultMap>
+  <insert id="insert" parameterType="org.example.keephealthy02.Entity.Sleep">
+    insert into sleep (userid, timequantume, weak, 
+      bed, date)
+    values (#{userid,jdbcType=VARCHAR}, #{timequantume,jdbcType=INTEGER}, #{weak,jdbcType=TIMESTAMP}, 
+      #{bed,jdbcType=TIMESTAMP}, #{date,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="org.example.keephealthy02.Entity.Sleep">
+    insert into sleep
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="timequantume != null">
+        timequantume,
+      </if>
+      <if test="weak != null">
+        weak,
+      </if>
+      <if test="bed != null">
+        bed,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="timequantume != null">
+        #{timequantume,jdbcType=INTEGER},
+      </if>
+      <if test="weak != null">
+        #{weak,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bed != null">
+        #{bed,jdbcType=TIMESTAMP},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -19,7 +19,7 @@ public class User {
 
     private String targetweight;
 
-    private String pastMedicalHistory;
+    private String  pastMedicalHistory;
 
     public String getId() {
         return id;
