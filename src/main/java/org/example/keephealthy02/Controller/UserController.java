@@ -18,10 +18,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    /*@GetMapping("/list")
+    @GetMapping("/list")
     public Result list(){
         return ResultUtil.success(this.userService.list());
-    }*/
+    }
     @ApiOperation(value = "修改")
     @PutMapping("/updateById")
     public Result updateById(@RequestBody User user){
