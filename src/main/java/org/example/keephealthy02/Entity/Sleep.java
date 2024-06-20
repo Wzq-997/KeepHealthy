@@ -1,6 +1,7 @@
 package org.example.keephealthy02.Entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,16 +15,16 @@ import java.util.Date;
 @TableName("sleep")
 @Data
 public class Sleep {
+
+    @ApiModelProperty(value = "用户id")
     private String userId;
-
-//    睡眠总时长
+    @ApiModelProperty(value = "时间量")
     private Integer timeQuantume;
-
-//    起床时间
+    @ApiModelProperty("起床时间")
     private LocalDateTime weak;
-//  入睡
+    @ApiModelProperty(value = "上床时间")
     private LocalDateTime bed;
-
+    @ApiModelProperty(value = "日期")
     private LocalDate date;
 
 }
