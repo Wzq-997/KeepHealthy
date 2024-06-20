@@ -18,35 +18,9 @@
     values (#{date,jdbcType=DATE}, #{consumecalories,jdbcType=REAL}, #{userid,jdbcType=VARCHAR}, 
       #{foods,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.example.keephealthy02.Entity.Userdiet">
-    insert into userdiet
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="date != null">
-        date,
-      </if>
-      <if test="consumecalories != null">
-        consumeCalories,
-      </if>
-      <if test="userid != null">
-        userid,
-      </if>
-      <if test="foods != null">
-        foods,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="date != null">
-        #{date,jdbcType=DATE},
-      </if>
-      <if test="consumecalories != null">
-        #{consumecalories,jdbcType=REAL},
-      </if>
-      <if test="userid != null">
-        #{userid,jdbcType=VARCHAR},
-      </if>
-      <if test="foods != null">
-        #{foods,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
+    <select id="getConsumeCalories" resultType="java.lang.Double">
+      SELECT consumeCalories
+      FROM userdiet
+      WHERE userid = #{userid} AND date = #{date}
+    </select>
 </mapper>

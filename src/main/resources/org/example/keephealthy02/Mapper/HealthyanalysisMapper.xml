@@ -3,45 +3,17 @@
 <mapper namespace="org.example.keephealthy02.Mapper.HealthyanalysisMapper">
   <resultMap id="BaseResultMap" type="org.example.keephealthy02.Entity.Healthyanalysis">
     <result column="Date" jdbcType="DATE" property="date" />
-    <result column="userid" jdbcType="VARCHAR" property="userid" />
-    <result column="BMI" jdbcType="REAL" property="bmi" />
-    <result column="healthLevel" jdbcType="INTEGER" property="healthlevel" />
+    <result column="userid" jdbcType="VARCHAR" property="userId" />
+    <result column="BMI" jdbcType="REAL" property="BMI" />
+    <result column="healthLevel" jdbcType="INTEGER" property="healthLevel" />
   </resultMap>
   <insert id="insert" parameterType="org.example.keephealthy02.Entity.Healthyanalysis">
-    insert into healthanalysis (Date, userid, BMI, 
-      healthLevel)
+    insert into healthyanalysis (Date, userid, bmi, health_level)
     values (#{date,jdbcType=DATE}, #{userid,jdbcType=VARCHAR}, #{bmi,jdbcType=REAL}, 
-      #{healthlevel,jdbcType=INTEGER})
+      #{healthLevel,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="org.example.keephealthy02.Entity.Healthyanalysis">
-    insert into healthanalysis
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="date != null">
-        Date,
-      </if>
-      <if test="userid != null">
-        userid,
-      </if>
-      <if test="bmi != null">
-        BMI,
-      </if>
-      <if test="healthlevel != null">
-        healthLevel,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="date != null">
-        #{date,jdbcType=DATE},
-      </if>
-      <if test="userid != null">
-        #{userid,jdbcType=VARCHAR},
-      </if>
-      <if test="bmi != null">
-        #{bmi,jdbcType=REAL},
-      </if>
-      <if test="healthlevel != null">
-        #{healthlevel,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
+    <select id="SelectHealthyWithDate" resultType="java.lang.Integer">
+        select * from healthyanalysis
+        where userid = #{userid} AND date = #{date}
+    </select>
 </mapper>

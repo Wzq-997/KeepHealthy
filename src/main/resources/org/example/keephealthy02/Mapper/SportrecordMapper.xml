@@ -3,7 +3,7 @@
 <mapper namespace="org.example.keephealthy02.Mapper.SportrecordMapper">
   <resultMap id="BaseResultMap" type="org.example.keephealthy02.Entity.Sportrecord">
     <result column="date" jdbcType="DATE" property="date" />
-    <result column="consumeCalories" jdbcType="REAL" property="consumecalories" />
+    <result column="consumeCalories" jdbcType="REAL" property="consumeCalories" />
     <result column="userid" jdbcType="VARCHAR" property="userid" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.example.keephealthy02.Entity.Sportrecord">
@@ -18,35 +18,9 @@
     values (#{date,jdbcType=DATE}, #{consumecalories,jdbcType=REAL}, #{userid,jdbcType=VARCHAR}, 
       #{type,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.example.keephealthy02.Entity.Sportrecord">
-    insert into sportrecord
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="date != null">
-        date,
-      </if>
-      <if test="consumecalories != null">
-        consumeCalories,
-      </if>
-      <if test="userid != null">
-        userid,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="date != null">
-        #{date,jdbcType=DATE},
-      </if>
-      <if test="consumecalories != null">
-        #{consumecalories,jdbcType=REAL},
-      </if>
-      <if test="userid != null">
-        #{userid,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
+  <select id="getConsumeCalories" resultType="java.lang.Double">
+    SELECT consumeCalories
+    FROM userdiet
+    WHERE userid = #{userid} AND date = #{date}
+  </select>
 </mapper>

@@ -13,9 +13,10 @@ import java.util.Date;
 public class Healthyanalysis {
     private Date date;
 
-    private String userId;
+    private String userid;
 
-    private double BMI;
+    private double bmi;
 
     private Integer healthLevel;
+
 }

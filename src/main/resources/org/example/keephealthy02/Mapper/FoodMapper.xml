@@ -12,29 +12,4 @@
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{calories,jdbcType=REAL}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.example.keephealthy02.Entity.Food">
-    insert into food
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="calories != null">
-        calories,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="calories != null">
-        #{calories,jdbcType=REAL},
-      </if>
-    </trim>
-  </insert>
 </mapper>

@@ -33,7 +33,6 @@ public class SportRecordImpl implements SportRecordService {
     @Override
     public Integer newSportRecord(double lastTime, String userId, String sportId) {
 //        计算消耗的卡路里
-
         SportType sportType = sportTypeMapper.selectById(sportId);
         double single = sportType.getSingleCalorie();
 //        获取用户的基本信息
