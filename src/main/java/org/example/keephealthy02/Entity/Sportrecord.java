@@ -14,8 +14,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Sportrecord {
 
-    @ApiModelProperty(value = "类型")
-    private String type;
     @ApiModelProperty(value = "日期")
     private LocalDate date;
     @ApiModelProperty(value = "用户id")
@@ -24,5 +22,6 @@ public class Sportrecord {
     private String sportId;
     @ApiModelProperty(value = "消耗卡路里")
     private Double consumeCalories;
+
     private double lastTime;
 }

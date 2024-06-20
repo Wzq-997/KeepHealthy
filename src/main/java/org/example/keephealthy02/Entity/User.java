@@ -24,15 +24,14 @@ public class User {
     @ApiModelProperty(value = "性别")
     private Integer sex;
     @ApiModelProperty(value = "生日")
-    private Date birthday;
+    private LocalDate birthday;
     @ApiModelProperty(value = "身高")
-    private Float height;
+    private Double height;
     @ApiModelProperty(value = "体重")
-    private Float weight;
+    private Double weight;
     @ApiModelProperty(value = "目标体重")
-    private String targetweight;
+    private Double targetweight;
     @ApiModelProperty(value = "既往病史")
     private String pastMedicalHistory;
-
 
 }

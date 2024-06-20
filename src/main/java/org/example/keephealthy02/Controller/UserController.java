@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.Serializable;
 
 @RestController
+@RequestMapping("/user")
 @Api(tags = "用户管理Api")
 public class UserController {
     //修改和删除

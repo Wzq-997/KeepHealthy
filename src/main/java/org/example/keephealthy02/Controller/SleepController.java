@@ -29,7 +29,7 @@ public class SleepController {
     }
     @ApiOperation(value = "查询本人的信息")
     @GetMapping("/MyInfo/{userId}")
-    public Sleep MyInfo(@PathVariable("userId") String userId){
+    public List<Sleep> MyInfo(@PathVariable("userId") String userId){
 
         return sleepService.MyInfo(userId);
     }

@@ -16,7 +16,6 @@ import java.util.Date;
 public class Userdiet {
     @ApiModelProperty(value = "食物")
     private String foods;
-
     @ApiModelProperty(value = "用户ID")
     private String userId;
     @ApiModelProperty(value = "食物ID")

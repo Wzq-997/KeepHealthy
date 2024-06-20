@@ -1,6 +1,7 @@
 package org.example.keephealthy02.Entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class SportType {
     private String sportId;
     private String sportName;
-//    标准卡路里
+    @ApiModelProperty(value = "标准卡路里")
     private double singleCalorie;
 }
