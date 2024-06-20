@@ -28,9 +28,9 @@
             1. 此方式必须保证mapper接口和mapper映射文件在同相同的包下
             2. mapper接口要和mapper映射文件的名字保持一致
          -->
-        <!--        <mapper resource="mapper/DepartmentMapper.xml"/>-->
+<!--        <mapper resource="mapper/DepartmentMapper.xml"/>-->
 
-        <package name="org.example.keephealthy02.Mapper"/>
+        <package name="org/example/wzqfirstproject/mapper"/>
     </mappers>
 
 </configuration>

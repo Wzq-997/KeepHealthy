@@ -16,6 +16,7 @@ public class Sportrecord {
     private String userId;
     private String sportId;
 //    消耗卡路里
-    private Double consumeCalories;
+
+    private double consumeCalories;
     private double lastTime;
 }

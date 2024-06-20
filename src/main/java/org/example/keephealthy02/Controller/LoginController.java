@@ -1,5 +1,6 @@
 package org.example.keephealthy02.Controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -17,6 +18,31 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+
+class LoginRequest {
+    @JsonProperty("userId") // 如果 JSON 属性名和 Java 属性名不一致，可以使用 @JsonProperty
+    private String userId;
+
+    @JsonProperty("password")
+    private String password;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+// ... getter 和 setter
+}
 @RestController
 @RequestMapping("/main")
 @Api(tags = "登录管理Api")
@@ -30,8 +56,7 @@ public class LoginController {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id",user.getId());
         claims.put("name",user.getName());
-        claims.put("password",user.getPassword());
-        claims.put("birthday",user.getBirthday());
+//        claims.put("password",user.getPassword());
         claims.put("height",user.getHeight());
         claims.put("weight",user.getWeight());
         claims.put("targetweight",user.getTargetweight());
@@ -41,45 +66,43 @@ public class LoginController {
     }
     /**
      * login登录函数
-     * @param userId 用户输入的账户
-     * @param password 用户输入的密码
-     * @param response 用于构建和修改Http请求
      * @return 结果：返回1，登录成功，同时携带token，返回0，登录失败
      */
-    @ApiOperation(value = "登录",notes = "生成的token在headr的set-cookie下")
-    @ApiImplicitParams({
-            @ApiImplicitParam(
-                    name = "userId",
-                    value = "用户id",
-                    required = true
-            ),
-            @ApiImplicitParam(
-                    name = "password",
-                    value = "用户密码",
-                    required = true
-            )
-    })
+    @ApiOperation(value = "登录",notes = "返回JWT令牌")
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public Result login(@RequestParam String userId, @RequestParam String password, HttpServletResponse response){
-        User user =  userServiceImpl.getuser(userId);
-        if(user != null && user.getPassword().equals(password)){// 生成 JWT
-            String jwt = JwtUtils.generateJwt(generateClaim(user));//当前登录的用户信息
-
-            // 创建一个 Cookie 并将 JWT 存入其中
-            Cookie cookie = new Cookie("jwt", jwt);
-            cookie.setHttpOnly(true);
-            // 在生产环境中确保通过 HTTPS 传输
-            cookie.setSecure(true);
-            cookie.setPath("/");
-            cookie.setMaxAge(1); // 设置 Cookie 的有效期为 1 小时
-           response.addCookie(cookie);
-            // 创建一个新的响应对象，包含其他信息
-            Map<String, Object> respones = new HashMap<>();
-            respones.put("date", LocalDateTime.now());
-            return new Result(1,"登录成功", respones);
+    public Result login(@RequestBody LoginRequest loginRequest) {
+        User user = userServiceImpl.getuser(loginRequest.getUserId());
+        if (user != null && user.getPassword().equals(loginRequest.getPassword())) {
+            String jwt = JwtUtils.generateJwt(generateClaim(user)); // 当前登录的用户信息
+            // 不再设置Cookie，而是将JWT作为响应体的一部分返回
+            Map<String, Object> responseData = new HashMap<>();
+            responseData.put("token", jwt); // 将JWT放入响应数据中
+            return new Result(1, "登录成功", responseData);
         }
-        return new Result(0,"密码错误",LocalDateTime.now());
+        return new Result(0, "密码错误", LocalDateTime.now());
     }
+
+//    public Result login(@RequestBody LoginRequest loginRequest, HttpServletResponse response){
+//        User user =  userServiceImpl.getuser(loginRequest.getUserId());
+//        System.out.println(user.getName());
+//        if(user != null && user.getPassword().equals(loginRequest.getPassword())){// 生成 JWT
+//            String jwt = JwtUtils.generateJwt(generateClaim(user));//当前登录的用户信息
+//
+//            // 创建一个 Cookie 并将 JWT 存入其中
+//            Cookie cookie = new Cookie("jwt", jwt);
+//            cookie.setHttpOnly(true);
+//            // 在生产环境中确保通过 HTTPS 传输
+//            cookie.setSecure(true);
+//            cookie.setPath("/");
+//            cookie.setMaxAge(1); // 设置 Cookie 的有效期为 1 小时
+//           response.addCookie(cookie);
+//            // 创建一个新的响应对象，包含其他信息
+//            Map<String, Object> respones = new HashMap<>();
+//            respones.put("date", LocalDateTime.now());
+//            return new Result(1,"登录成功", respones);
+//        }
+//        return new Result(0,"密码错误",LocalDateTime.now());
+//    }
 
     /**
      *

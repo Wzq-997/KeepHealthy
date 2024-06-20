@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：最主要的作用就是绑定mapper.xml与对应那个Mapper接口的关系，要求接口名称为：全限定名 -->
+<mapper namespace="org.example.keephealthy02.Mapper.sportsWithTypeMapper">
+    <resultMap id="sportMap" type="org.example.keephealthy02.Vo.sportsWithType">
+        <result column="date" property="date"></result>
+        <result column="sport_id" property="sportId"></result>
+        <result column="consume_calories" property="consumeCalories"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="last_time" property="lastTime"></result>
+        <collection property="sportTypes" javaType="org.example.keephealthy02.Entity.SportType">
+            <result column="sport_id" property="sportId"></result>
+            <result column="sport_name" property="sportName"></result>
+            <result column="single_calorie" property="singleCalorie"></result>
+        </collection>
+    </resultMap>
+    <resultMap id="sportOne" type="org.example.keephealthy02.Vo.SingleCar">
+        <result column="sport_id" property="sportId"></result>
+        <result column="consume_calories" property="consumeCalories"></result>
+        <result column="last_time" property="lastTime"></result>
+    </resultMap>
+    <resultMap id="friends" type="org.example.keephealthy02.Vo.Friends">
+        <result column="name" property="name"></result>
+        <result column=" total_calories" property=" totalCalories"></result>
+    </resultMap>
+    <select id="getSportsWithType" resultMap="sportMap">
+        select * from
+            sportrecord sr left join sporttype st
+                               on
+                                   sr.sport_id = st.sport_id
+        where user_id=#{userId}
+    </select>
+
+
+
+    <select id="getAllsingle" resultMap="sportOne">
+        select sr.sport_id,consume_calories,last_time  from
+            sportrecord sr left join sporttype st
+                                     on
+                                         sr.sport_id = st.sport_id
+        where user_id=#{userId} and sr.date=#{date}
+    </select>
+    <select id="getFriends" resultMap="friends">
+        SELECT users.name, SUM(sportrecord.consume_calories) AS total_calories
+        FROM user AS users
+                 JOIN sportrecord ON users.id = sportrecord.user_id
+        GROUP BY users.id, users.name
+        ORDER BY total_calories DESC
+        LIMIT 6
+    </select>
+</mapper>

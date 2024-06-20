@@ -7,4 +7,5 @@ public interface UserService {
     public User selectById(String id);
     public void insert(User user);
     public void update(User user);
+
 }

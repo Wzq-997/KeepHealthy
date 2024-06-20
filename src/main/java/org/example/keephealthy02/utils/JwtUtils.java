@@ -9,7 +9,7 @@ import java.util.Map;
 public class JwtUtils {
 
     private static String signKey = "nonine";
-    private static Long expire = 30000L;//12小时
+    private static Long expire = 43200000L;//12小时
 
     /**
      * 生成JWT令牌

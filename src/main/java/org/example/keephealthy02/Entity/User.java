@@ -21,8 +21,6 @@ public class User {
 
     private Integer sex;
 
-    private LocalDate birthday;
-
     private Double height;
 
     private Double weight;
@@ -30,4 +28,5 @@ public class User {
     private Double targetweight;
 
     private String  pastMedicalHistory;
+    private Integer age;
 }
