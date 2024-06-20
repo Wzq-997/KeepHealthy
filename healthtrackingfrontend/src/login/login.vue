@@ -3,13 +3,14 @@
     <transition appear name="opacitytrans">
       <div class="container" id="container">
         <div class="form-container sign-in-container">
-          <form action="#">
+          <form @submit.prevent="login">
             <h1>健康追踪应用系统</h1>
 
             <span>Version 1.0.0</span>
             <input type="text" placeholder="请输入账号" v-model="account" />
             <input type="password" placeholder="请输入密码" v-model="password" />
             <div class="button" @click="login">登录</div>
+            <a class="" @click="$router.push('/register')">没有账号？立即注册</a>
           </form>
         </div>
         <div class="overlay-container">
@@ -26,6 +27,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "LoginVue",
   data() {
@@ -35,14 +38,32 @@ export default {
     };
   },
   methods: {
-    login() {
+    async login() {
       if (!this.account || !this.password) {
         alert("请输入账号和密码");
         return;
       }
+      
+      try {
+        const response = await axios.post('', {
+          account: this.account,
+          password: this.password
+        });
 
-    
-     },
+        if (response.data.success) {
+          // 登录成功，处理后续逻辑
+          alert('登录成功');
+          // 跳转到主页面
+          this.$router.push('/');
+        } else {
+          // 登录失败，显示错误信息
+          alert(response.data.message);
+        }
+      } catch (error) {
+        console.error(error);
+        alert('登录过程中出现错误，请稍后再试');
+      }
+    }
   },
 };
 </script>
