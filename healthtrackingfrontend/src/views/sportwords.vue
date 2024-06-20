@@ -1,6 +1,64 @@
 <script setup>
-import { ref } from "vue";
+import {onMounted, ref} from "vue";
+import * as echarts from 'echarts';
+const container = ref(null);
 
+
+let xAxisData = ["Mon.","Tues.","Wed.","Thur.","Fir.","Sat.","Sun."];
+let data1 = [];
+let data2 = [];
+
+for (let i = 0; i < 15; i++) {
+  data1.push(i+7);
+  data2.push(i+Math.random()*10+1);
+}
+let option = {
+  legend: {
+    data: ['本周', '上周']
+  },
+  xAxis: {
+    data: xAxisData,
+    splitLine: {
+      show: false
+    }
+  },
+  yAxis: {},
+  series: [
+    {
+      name: '本周',
+      type: 'bar',
+      data: data1,
+      emphasis: {
+        focus: 'series'
+      },
+      animationDelay: function(idx) {
+        return idx * 10;
+      }
+    },
+    {
+      name: '上周',
+      type: 'bar',
+      data: data2,
+      emphasis: {
+        focus: 'series'
+      },
+      animationDelay: function(idx) {
+        return idx * 10 + 100;
+      }
+    }
+  ],
+  animationEasing: 'elasticOut',
+  animationDelayUpdate: function(idx) {
+    return idx * 5;
+  }
+};
+
+onMounted(()=>{
+  console.log(container.value)
+  let eChartsType = echarts.init(container.value);
+  eChartsType.setOption(option);
+  console.log(container.value)
+})
 // 使用 ref 创建响应式数据
 const tableData = ref([
   {
@@ -70,6 +128,10 @@ const tableData = ref([
       />
     </div>
   </div>
+  <div class="sportTable" >
+    <div class="container" ref="container" style="width: 100%; height: 400px;"></div>
+  </div>
+
 </template>
 
 <style scoped>
@@ -108,5 +170,13 @@ const tableData = ref([
   margin-bottom: 25px;
   max-width: 300px;
   width: 300px;
+}
+.sportTable{
+  position:fixed;
+  margin-top: 300px;
+  margin-left: 200px;
+  width: 1000px;
+  height: 500px;
+  border:1px red;
 }
 </style>

@@ -3,12 +3,17 @@ import login from "../views/login.vue";
 import system from "@/views/system.vue";
 import sports from "../views/sports.vue";
 import sportwords from "../views/sportwords.vue";
-
+import ExercisePrescriptionView from "@/views/ExercisePrescriptionView.vue";
 const routes = [
   {
     path: "/login",
     name: "登录",
     component: login,
+  },
+  {
+    path: "/EPV",
+    name: "epv",
+    component: ExercisePrescriptionView,
   },
 
   {

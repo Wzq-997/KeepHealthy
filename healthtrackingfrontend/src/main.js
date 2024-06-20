@@ -21,6 +21,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import mitt from "mitt";
+import * as echarts from 'echarts';
 
 // 手动导入并注册你需要的图标
 import {
@@ -43,7 +44,7 @@ app.component("CopyDocument", CopyDocument);
 app.component("FolderRemove", FolderRemove);
 app.component("Bowl", Bowl);
 app.component("Coordinate", Coordinate);
-
+app.component("Echarts",echarts)
 app.use(ElementPlus);
 app.use(router);
 app.use(store);
