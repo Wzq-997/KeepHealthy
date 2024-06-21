@@ -6,8 +6,7 @@
       <div class="home_userinfoContainer">
         <el-dropdown>
           <span class="el-dropdown-link home_userinfo">
-            {{ admin.name
-            }}<i class="el-icon-arrow-down el-icon--right home_userinfo"></i>
+            {{ admin.name }}<i class="el-icon-arrow-down el-icon--right home_userinfo"></i>
           </span>
           <template #dropdown>
             <el-dropdown-menu>
@@ -36,18 +35,15 @@
             >
               <el-icon><List /></el-icon>运动处方
             </el-menu-item>
+
             <el-menu-item
               index="/sports"
               :class="$route.path == '/sports' ? 'is-active' : ''"
             >
               <el-icon><CopyDocument /></el-icon>自主运动
             </el-menu-item>
-            <el-menu-item
-              index="/更换处方"
-              :class="$route.path == '/更换处方' ? 'is-active' : ''"
-            >
-              <el-icon><FolderRemove /></el-icon>更换处方
-            </el-menu-item>
+
+
             <!--            </el-menu-item-group>-->
           </el-submenu>
 
@@ -56,7 +52,7 @@
 
             <el-menu-item
               index="/饮食记录"
-              :class="$route.path == '/饮食记录' ? 'is-active' : ''"
+              :class="$route.path == '/' ? 'is-active' : ''"
             >
               <el-icon><Bowl /></el-icon>饮食记录
             </el-menu-item>
@@ -91,6 +87,7 @@
             <el-menu-item index="/我的"
               ><h3 class="menu-title">--我的</h3></el-menu-item
             >
+
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -165,8 +162,11 @@ export default {
       percentage: 20,
     };
   },
+
   created() {
-    let admin = JSON.parse(window.localStorage.getItem("systemAdmin"));
+    //你们在用的时候数据用静态
+    let admin={id:1,username:"admin1",password: "123123", name: "管理员1", telephone: "88132001"};
+    // let admin = JSON.parse(window.localStorage.getItem("systemAdmin"));
     this.admin = admin;
   },
   mounted() {
@@ -237,7 +237,7 @@ export default {
 .main {
   background-color: white;
   width: 100%;
-  height: 120%;
+  height: 100%;
 }
 .demo-progress {
   max-width: 100px;
