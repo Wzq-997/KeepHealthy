@@ -3,7 +3,8 @@
   <div class="container">
     <div class="lbt" >
 
-        <el-carousel style=" height: 600px" >
+        <el-carousel style=" height: 600px"
+                     motion-blur>
                   <el-carousel-item  class="carousel-item">
                     <img src="../img/sports/run.png" alt="image" class="carousel-image" >
                   </el-carousel-item>
@@ -28,8 +29,8 @@
 
     <div class="sportsType" style="position: relative;background-color: rgba(161,175,189,0.9)">
     <h2 >请选择运动类型</h2>
-    <el-radio-group v-model="selectedSport">
-      <el-radio v-for="sport in sports" :key="sport.sport_id" :label="sport.sport_id">{{ sport.sport_name }}</el-radio>
+    <el-radio-group v-model="selectedSport"  @change="handleChange">
+      <el-radio v-for="sport in sports" :key="sport.sport_id" :label="sport.sport_name">{{ sport.sport_name }}</el-radio>
     </el-radio-group>
   </div>
     <div class="button-group" >
@@ -41,62 +42,30 @@
     </div>
     </div>
   <div style="position: relative;margin-left:810px">
-      <RingGauge  :xAxisData="xAxisData"
+      <RingGauge  :xAxisData_name="xAxisData_name"
                   :data1="data1"
-                  :data2="data2"   />
-<!--      <RingGauge   />-->
+                  :data2="data2"
+
+                  />
   </div>
 
 </template>
 
 <script setup>
-import {ref, onMounted, onUnmounted, reactive} from 'vue';
+import {ref, onMounted, onUnmounted, reactive, computed} from 'vue';
 import { useStore } from 'vuex'; // 注意这里通常我们使用 useStore 而不是直接导入 index
 import * as echarts from 'echarts/core';
 import { GaugeChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import RingGauge from "@/components/Ring-Gauge.vue";
-
 echarts.use([GaugeChart, CanvasRenderer]);
-
-
 const store = useStore();
-
 const started = ref(false);
 const stopTime = ref(null);
 let currentTimer = null;
 let startTime = 0;
 const passedTime = ref(0);
-
-const startTimer = () => {
-  if(!started.value) {
-    started.value = true;
-    startTime = Date.now();
-    currentTimer = setInterval(() => {
-      passedTime.value = (Date.now() - startTime) / 1000;
-    }, 100);
-  }
-};
-
-const stopTimer = () => {
-  if(currentTimer) {
-    clearInterval(currentTimer);
-    currentTimer = null;
-  }
-
-};
-
-onMounted(() => {
-  stopTimer();
-});
-
-onUnmounted(() => {
-  if (currentTimer) {
-    clearInterval(currentTimer);
-    currentTimer = null;
-  }
-});
-
+//选择的运动
 const selectedSport = ref('');
 const sports = ref([
   { sport_id: 'S001', sport_name: '跑步', single_calorie: 1.3 },
@@ -105,14 +74,59 @@ const sports = ref([
   { sport_id: 'S004', sport_name: '骑行', single_calorie: 2.6 },
   { sport_id: 'S005', sport_name: '散步', single_calorie: 0.3 },
   { sport_id: 'S006', sport_name: '攀登', single_calorie: 5 },
-
 ]);
 
-const xAxisData = ["一" ,"Tues.","Wed.","Thur.","Fri.","Sat.","Sun."]; // 确保数据的正确性
-const data1=[20,11,30,44,66,55,88];
-const data2= [11,44,33,55,66,22,99];
-// const data1=[20,11,30,44,66,55,passedTime.value];
-// const data2= [11,44,33,55,66,22,passedTime.value];
+
+const xAxisData_name=computed(()=>{
+  return sports.value.map(sport => sport.sport_name)
+
+})
+const data1=ref([20,11,30,44,66,55,0]);//绑定数据库各项运动的昨日运动时长
+const data2= ref([11,44,33,55,66,0,99]);//绑定数据库各项运动的今日运动时长
+const startTimer = () => {
+  if(!started.value) {
+    started.value = true;
+    startTime = Date.now();
+    currentTimer = setInterval(() => {
+      passedTime.value = (Date.now() - startTime) / 1000;
+    }, 100);
+
+  }
+};
+//找到运动
+const handleChange = (value)=>{
+   selectedSport.value=value
+}
+
+
+//更新运动名对应的数据
+const updateData=()=>{
+  for(let i=0;i<sports.value.length;i++){
+    if(sports.value[i].sport_name==selectedSport.value){
+      data2.value[i]+=passedTime.value;
+      console.log("data2[i]-"+data2.value[i]+"passedTime"+passedTime.value)
+    }
+  }
+}
+onMounted(()=>handleChange())
+const stopTimer = () => {
+  if(currentTimer) {
+    clearInterval(currentTimer);
+    currentTimer = null;
+  }
+  updateData();
+};
+onMounted(() => {
+  stopTimer();
+
+});
+onUnmounted(() => {
+  if (currentTimer) {
+    clearInterval(currentTimer);
+    currentTimer = null;
+  }
+});
+
 // 注册子组件
 defineExpose({
 
@@ -121,87 +135,6 @@ defineExpose({
 
 </script>
 
-<!--<script >-->
-<!--import { ref, onMounted, onUnmounted } from 'vue';-->
-<!--import index from "vuex";-->
-<!--import * as echarts from 'echarts/core';-->
-<!--import { GaugeChart } from 'echarts/charts';-->
-<!--import { CanvasRenderer } from 'echarts/renderers';-->
-<!--import RingGauge from "@/components/Ring-Gauge.vue";-->
-<!--echarts.use([GaugeChart, CanvasRenderer]);-->
-<!--export default {-->
-
-<!--  components:{-->
-<!--    RingGauge-->
-<!--  },-->
-
-<!--  computed: {-->
-<!--    index() {-->
-<!--      return index-->
-<!--    }-->
-<!--  },-->
-
-<!--  setup() {-->
-
-<!--    const started = ref(false);-->
-<!--    const stopTime = ref(null);-->
-<!--    let currentTimer = null;-->
-<!--    let startTime = 0;-->
-<!--    const passedTime = ref(0);-->
-
-<!--    const startTimer = () => {-->
-<!--      if(!started.value) {-->
-<!--        started.value = true;-->
-<!--        startTime = Date.now();-->
-<!--        currentTimer = setInterval(() => {-->
-<!--          passedTime.value = (Date.now() - startTime) / 1000;-->
-<!--        }, 100);-->
-<!--      }-->
-<!--    };-->
-
-<!--    const stopTimer = () => {-->
-<!--      if(currentTimer) {-->
-<!--        clearInterval(currentTimer);-->
-<!--        currentTimer = null;-->
-<!--      }-->
-<!--      const data1=[0,0,0,0,0,0,passedTime]-->
-<!--    };-->
-
-<!--    onMounted(() => {-->
-<!--      stopTimer();-->
-<!--    });-->
-
-<!--    onUnmounted(() => {-->
-<!--      if (currentTimer) {-->
-<!--        clearInterval(currentTimer);-->
-<!--        currentTimer = null;-->
-<!--      }-->
-<!--    });-->
-
-<!--    const selectedSport = ref('');-->
-<!--    const sports = ref([-->
-<!--      { sport_id: 'S001', sport_name: '跑步', single_calorie: 1.3 },-->
-<!--      { sport_id: 'S002', sport_name: '瑜伽', single_calorie: 2.3 },-->
-<!--      { sport_id: 'S003', sport_name: '游泳', single_calorie: 3.5 },-->
-<!--      { sport_id: 'S004', sport_name: '骑行', single_calorie: 2.6 },-->
-<!--      { sport_id: 'S005', sport_name: '散步', single_calorie: 0.3 },-->
-<!--      { sport_id: 'S006', sport_name: '攀登', single_calorie: 5 },-->
-<!--    ]);-->
-
-
-<!--    return {-->
-<!--      started,-->
-<!--      startTimer,-->
-<!--      stopTimer,-->
-<!--      passedTime,-->
-<!--      stopTime,-->
-<!--      selectedSport,-->
-<!--      sports,-->
-
-<!--    };-->
-<!--  },-->
-<!--};-->
-<!--</script>-->
 <style scoped>
 .lbt {
   width: 460px;

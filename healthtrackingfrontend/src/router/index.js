@@ -3,14 +3,14 @@ import login from "../views/login.vue";
 import system from "@/views/system.vue";
 import sports from "../views/sports.vue";
 import sportwords from "../views/sportwords.vue";
-
+import dietRecord from "../views/DietRecordView.vue";
+import dailyDiet from "../views/DailyDietView.vue";
 const routes = [
   {
     path: "/login",
     name: "登录",
     component: login,
   },
-
 
   {
     path: "/",
@@ -28,17 +28,20 @@ const routes = [
         name: "自主运动",
         component: sports,
       },
-
+      {
+        path: "/dietRecord",
+        name: "饮食记录",
+        component: dietRecord,
+      },
+      {
+        path: "/dailyDiet",
+        name: "健康食谱",
+        component: dailyDiet,
+      },
     ],
   },
 
-  // {
-  //   path: "/about",
-  //   name: "about",
-  //
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  // },
+
 ];
 
 const router = createRouter({

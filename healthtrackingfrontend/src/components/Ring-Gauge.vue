@@ -5,12 +5,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted,watch } from 'vue';
 import * as echarts from 'echarts';
 import { defineProps } from 'vue';
 
 const props = defineProps({
-  xAxisData: {
+  xAxisData_name: {
     type: Array,
     default: () => [],
   },
@@ -28,7 +28,6 @@ const props = defineProps({
   // }
 
 });
-
 const container = ref(null);
 
 let option = {
@@ -36,7 +35,7 @@ let option = {
     data: ['昨天', '今天']
   },
   xAxis: {
-    data: props.xAxisData, // 使用从 props 传递进来的数据
+    data: props.xAxisData_name, // 使用从 props 传递进来的数据
     splitLine: {
       show: false
     }
@@ -44,7 +43,7 @@ let option = {
   yAxis: {},
   series: [
     {
-      name: '本周',
+      name: '昨天',
       type: 'bar',
       data: props.data1, // 使用从 props 传递进来的数据
       emphasis: {
@@ -55,7 +54,7 @@ let option = {
       }
     },
     {
-      name: '上周',
+      name: '今天',
       type: 'bar',
       data: props.data2, // 使用从 props 传递进来的数据
       emphasis: {
@@ -73,8 +72,18 @@ let option = {
   }
 };
 
+// 监听 data2 的变化
+watch(
+    () => props.options,
+    (newVal, oldVal) => {
+      if (newVal !== oldVal) {
+        eChartsType.setOption(newVal);
+      }
+    },
+    { deep: true } // 如果 options 是一个复杂对象，需要深度监听
+);
 onMounted(() => {
-  let eChartsType = echarts.init(container.value);
+  const eChartsType = echarts.init(container.value);
   eChartsType.setOption(option);
 });
 </script>
