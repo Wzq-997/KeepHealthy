@@ -96,7 +96,6 @@ const tableData = ref([
   </div>
 
   <div class="tablebox" style="margin-left: 470px; margin-top: 10px">
-    <!--  <div class="tablebox"  style="float:right;" >-->
     <h5 style="color: #419fff; margin-top: 15px">| 好友排行榜：</h5>
     <el-table :data="tableData" style="width: 100%" max-height="250">
       <el-table-column fixed prop="id" label="排名" width="150" />

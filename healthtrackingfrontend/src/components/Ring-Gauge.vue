@@ -85,6 +85,7 @@ watch(
 onMounted(() => {
   const eChartsType = echarts.init(container.value);
   eChartsType.setOption(option);
+  console.log("运动时间表")
 });
 </script>
 
