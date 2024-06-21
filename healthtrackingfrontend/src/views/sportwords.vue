@@ -7,7 +7,7 @@ const container = ref(null);
 let xAxisData = ["Mon.","Tues.","Wed.","Thur.","Fir.","Sat.","Sun."];
 let data1 = [];
 let data2 = [];
-
+console.log("11")
 for (let i = 0; i < 15; i++) {
   data1.push(i+7);
   data2.push(i+Math.random()*10+1);

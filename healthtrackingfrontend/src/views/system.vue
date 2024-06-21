@@ -51,14 +51,14 @@
             <el-menu-item><h3 class="menu-title">--饮食管理</h3></el-menu-item>
 
             <el-menu-item
-              index="/饮食记录"
-              :class="$route.path == '/' ? 'is-active' : ''"
+              index="/dietRecord"
+              :class="$route.path == '/dietRecord' ? 'is-active' : ''"
             >
               <el-icon><Bowl /></el-icon>饮食记录
             </el-menu-item>
             <el-menu-item
-              index="/每日食谱"
-              :class="$route.path == '/每日食谱' ? 'is-active' : ''"
+              index="/dailyDiet"
+              :class="$route.path == '/dailyDiet' ? 'is-active' : ''"
             >
               <img src="../img/icon/person.png" class="icons" />每日食谱
             </el-menu-item>
@@ -87,6 +87,7 @@
             <el-menu-item index="/我的"
               ><h3 class="menu-title">--我的</h3></el-menu-item
             >
+
 
           </el-submenu>
         </el-menu>
@@ -120,20 +121,7 @@
 <script>
 import { List, Location } from "@element-plus/icons-vue";
 import axios from "axios";
-// import {onMounted} from "vue";
-//
-// onMounted(() => {
-//   axios.get('http://localhost:8099/user/lists')
-//       .then(function (response) {
-//         // 处理响应数据
-//         console.log(response)
-//         console.log(response.data);
-//       })
-//       .catch(function (error) {
-//         // 处理错误
-//         console.log(error);
-//       });
-// })
+
 export default {
   components: { List, Location },
   methods: {
@@ -170,17 +158,17 @@ export default {
     this.admin = admin;
   },
   mounted() {
-    axios
-      .get("http://localhost:8099/user/lists")
-      .then(function (response) {
-        // 处理响应数据
-        console.log(response);
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        // 处理错误
-        console.log(error);
-      });
+  //   axios
+  //     .get("http://localhost:8099/user/lists")
+  //     .then(function (response) {
+  //       // 处理响应数据
+  //       console.log(response);
+  //       console.log(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       // 处理错误
+  //       console.log(error);
+  //     });
   },
 };
 </script>
