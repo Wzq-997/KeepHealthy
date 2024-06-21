@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -46,4 +47,32 @@ public class UserdietServiceImpl implements UserdietService {
         int insert = userdietMapper.insert(userdiet);
         return insert;
     }
+
+    @Override
+    public double getConsumeCalories(String userid, Date date) {
+        QueryWrapper<Userdiet> query1 = new QueryWrapper<>();
+        query1.eq("user_id", userid).eq("date", date);
+        List<Userdiet> userdiets = userdietMapper.selectList(query1);
+        double sum = 0;
+        for(int i=0;i<userdiets.size();i++)
+        {
+            sum+=userdiets.get(i).getConsumeCalories();
+        }
+        return sum;
+    }
+
+    @Override
+    public double getAllIntake(String userId) {
+        QueryWrapper<Userdiet> query = new QueryWrapper<>();
+        query.eq("user_id",userId);
+        List<Userdiet> userdiets = userdietMapper.selectList(query);
+        double sum =0;
+        for(int i=0;i<userdiets.size();i++)
+        {
+            sum+=userdiets.get(i).getConsumeCalories();
+        }
+        return sum;
+    }
+
+
 }

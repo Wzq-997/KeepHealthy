@@ -42,11 +42,11 @@ create table healthanalysis
         foreign key (user_id) references user (id)
 )
     comment '健康分析表';
-INSERT INTO keephealthy.healthanalysis (Date, user_id, BMI, health_level) VALUES ('2023-01-01', 'U0001', 22.5, 1);
-INSERT INTO keephealthy.healthanalysis (Date, user_id, BMI, health_level) VALUES ('2023-01-15', 'U0002', 20, 2);
-INSERT INTO keephealthy.healthanalysis (Date, user_id, BMI, health_level) VALUES ('2023-02-01', 'U0003', 23, 3);
-INSERT INTO keephealthy.healthanalysis (Date, user_id, BMI, health_level) VALUES ('2023-02-15', 'U0004', 21.5, 2);
-INSERT INTO keephealthy.healthanalysis (Date, user_id, BMI, health_level) VALUES ('2023-03-01', 'U0005', 19.5, 1);
+INSERT INTO keephealthy.healthyanalysis (Date, user_id, BMI, health_level) VALUES ('2023-01-01', 'U0001', 22.5, 1);
+INSERT INTO keephealthy.healthyanalysis (Date, user_id, BMI, health_level) VALUES ('2023-01-15', 'U0002', 20, 2);
+INSERT INTO keephealthy.healthyanalysis (Date, user_id, BMI, health_level) VALUES ('2023-02-01', 'U0003', 23, 3);
+INSERT INTO keephealthy.healthyanalysis (Date, user_id, BMI, health_level) VALUES ('2023-02-15', 'U0004', 21.5, 2);
+INSERT INTO keephealthy.healthyanalysis (Date, user_id, BMI, health_level) VALUES ('2023-03-01', 'U0005', 19.5, 1);
 
 create table userdiet
 (

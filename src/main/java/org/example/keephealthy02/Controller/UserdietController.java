@@ -5,9 +5,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.example.keephealthy02.Entity.Healthyanalysis;
 import org.example.keephealthy02.Entity.Result;
 import org.example.keephealthy02.Entity.Userdiet;
 import org.example.keephealthy02.Mapper.UserdietMapper;
+import org.example.keephealthy02.Service.HealthanalysisService;
 import org.example.keephealthy02.Service.UserdietService;
 import org.example.keephealthy02.Vo.UserDietwithFood;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class UserdietController {
 
     @Autowired
     private UserdietService userdietService;
+    @Autowired
+    private HealthanalysisService healthanalysisService;
     @ApiOperation(value = "用户获取近期食品摄入信息")
     @ApiImplicitParam(
             name = "userId",
@@ -58,6 +62,8 @@ public class UserdietController {
     })
     public Result insertOne(@RequestParam String userId, @RequestParam String foodId,@RequestParam int quantity){
         Integer i = userdietService.insertOne(userId, foodId,quantity);
+//        摄入时，健康等级发生改变
+        healthanalysisService.getHealthLevle(userId);
         return Result.success(i);
     }
 

@@ -8,6 +8,7 @@ import {useUserStore} from "@/store";
 import router from "@/router";
 import {onBeforeMount, onMounted} from "vue";
 import {jwtDecode} from "jwt-decode";
+
 onBeforeMount(()=>{
   const token  = localStorage.getItem("token")
   console.log(token)

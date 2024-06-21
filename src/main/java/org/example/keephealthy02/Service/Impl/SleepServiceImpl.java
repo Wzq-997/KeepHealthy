@@ -54,7 +54,7 @@ public class SleepServiceImpl extends ServiceImpl<SleepMapper, Sleep> implements
         Sleep sleep = sleepMapper.selectOne(queryWrapper);*/
         HashMap<String, Object> colMap = new HashMap<>();
         colMap.put("user_id",userId);
-        List<Sleep> sleeps = sleepMapper.selectByMap(colMap);
+        List<Sleep> sleeps = sleepMapper.selectByMap(colMap).stream().limit(10).toList();
         return sleeps;
 
     }

@@ -9,6 +9,8 @@ import org.example.keephealthy02.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements UserService {
     @Autowired
@@ -37,4 +39,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         userMapper.update(user,queryWrapper);
     }
 
+    @Override
+    public Integer delete(String id) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id",id);
+        int delete = userMapper.delete(queryWrapper);
+        return delete;
+    }
+    @Override
+    public List<User> list(){
+        List<User> users = userMapper.selectList(null);
+        return users;
+    }
 }

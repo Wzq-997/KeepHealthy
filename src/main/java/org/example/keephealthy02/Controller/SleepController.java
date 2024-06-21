@@ -27,11 +27,12 @@ public class SleepController {
 
         return sleepService.CalculateSleepTime(userId);
     }
-    @ApiOperation(value = "查询本人的信息")
+    @ApiOperation(value = "查询本人的睡眠信息")
     @GetMapping("/MyInfo/{userId}")
-    public List<Sleep> MyInfo(@PathVariable("userId") String userId){
+    public Result MyInfo(@PathVariable("userId") String userId){
 
-        return sleepService.MyInfo(userId);
+        List<Sleep> sleeps = sleepService.MyInfo(userId);
+        return Result.success(sleeps);
     }
     //增删方法靠主外键
 

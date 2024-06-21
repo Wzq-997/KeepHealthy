@@ -5,6 +5,7 @@ import sports from "../views/sports.vue";
 import sportwords from "../views/sportwords.vue";
 import {jwtDecode} from "jwt-decode";
 import {useUserStore} from "@/store";
+import healthyStatus from "../views/healthyStatus.vue"
 
 const routes = [
   {
@@ -12,9 +13,13 @@ const routes = [
     name: "登录",
     component: login,
   },
-
   {
     path: "/",
+    name: "健康状态",
+    component: healthyStatus,
+  },
+  {
+    path: "/main",
     name: "系统",
     component: system,
     redirect: "/sportwords",

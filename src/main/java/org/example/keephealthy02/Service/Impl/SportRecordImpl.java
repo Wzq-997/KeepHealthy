@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -97,6 +98,32 @@ public class SportRecordImpl implements SportRecordService {
     @Override
     public List<Friends> getFriends() {
         return sportsWM.getFriends();
+    }
+
+    @Override
+    public double getConsumeCalories(String sportId, Date date) {
+        QueryWrapper<Sportrecord> query = new QueryWrapper<>();
+        query.eq("sport_id",sportId).eq("date",date);
+        List<Sportrecord> sportrecords = sportrecordMapper.selectList(query);
+        double sum =0;
+        for(int i=0;i<sportrecords.size();i++)
+        {
+            sum += sportrecords.get(i).getConsumeCalories();
+        }
+        return sum;
+    }
+
+    @Override
+    public double getAllConsumeCalories(String userId) {
+        QueryWrapper<Sportrecord> query = new QueryWrapper<>();
+        query.eq("user_id",userId);
+        List<Sportrecord> sportrecords = sportrecordMapper.selectList(query);
+        double sum =0;
+        for(int i=0;i<sportrecords.size();i++)
+        {
+            sum+= sportrecords.get(i).getConsumeCalories();
+        }
+        return sum;
     }
 
 

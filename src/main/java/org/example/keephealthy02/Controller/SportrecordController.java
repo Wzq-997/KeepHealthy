@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.example.keephealthy02.Entity.Result;
 import org.example.keephealthy02.Entity.Sportrecord;
 import org.example.keephealthy02.Entity.User;
+import org.example.keephealthy02.Service.HealthanalysisService;
 import org.example.keephealthy02.Service.SportRecordService;
 import org.example.keephealthy02.Service.UserService;
 import org.example.keephealthy02.Vo.Friends;
@@ -18,7 +19,9 @@ import org.example.keephealthy02.Vo.sportsWithType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,6 +34,8 @@ public class SportrecordController {
     private SportRecordService sportRecordService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private HealthanalysisService healthanalysisService;
     @ApiOperation(value = "新添加一条运动记录")
     @ApiImplicitParams({
             @ApiImplicitParam(
@@ -57,6 +62,8 @@ public class SportrecordController {
         Integer i = sportRecordService.newSportRecord(lastTime, userId, sportId);
         if (i>0)
         {
+//            当用户添加一次运动时，健康等级发生改变
+            healthanalysisService.updateHealthData(userService.getuser(userId));
             return Result.success("添加成功");
         }
         else

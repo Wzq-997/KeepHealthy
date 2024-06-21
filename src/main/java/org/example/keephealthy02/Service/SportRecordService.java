@@ -6,6 +6,7 @@ import org.example.keephealthy02.Vo.SingleCar;
 import org.example.keephealthy02.Vo.sportsWithType;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface SportRecordService {
@@ -21,4 +22,8 @@ public interface SportRecordService {
 
     List<Friends> getFriends();
 
+    double getConsumeCalories(String sportId, Date date);
+
+//    获取用户的所有卡路里消耗
+    double getAllConsumeCalories(String userId);
 }

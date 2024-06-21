@@ -11,11 +11,10 @@ import java.util.Date;
 @AllArgsConstructor
 @TableName("healthyanalysis")
 public class Healthyanalysis {
-    private Date date;
 
     private String userId;
 
-    private double BMI;
+    private double bmi;
 
     private Integer healthLevel;
 }
