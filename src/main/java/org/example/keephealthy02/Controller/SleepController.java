@@ -1,13 +1,11 @@
 package org.example.keephealthy02.Controller;
 
 import io.swagger.annotations.ApiOperation;
+import org.example.keephealthy02.Entity.Result;
 import org.example.keephealthy02.Entity.Sleep;
 import org.example.keephealthy02.Service.SleepService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,8 +29,10 @@ public class SleepController {
     }
     @ApiOperation(value = "查询本人的信息")
     @GetMapping("/MyInfo/{userId}")
-    public Sleep MyInfo(@PathVariable("userId") String userId){
+    public List<Sleep> MyInfo(@PathVariable("userId") String userId){
 
         return sleepService.MyInfo(userId);
     }
+    //增删方法靠主外键
+
 }

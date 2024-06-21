@@ -78,7 +78,7 @@ const startTimer = () => {
 };
 
 const stopTimer = () => {
-  started.value=true
+  // started.value=true
   stopTime.value = passedTime.value
   data1.value[6] = stopTime.value
   console.log(stopTime.value)

@@ -18,5 +18,5 @@ public interface SleepService extends IService<Sleep> {
 
     String CalculateSleepTime(String userId);
 
-    Sleep MyInfo(String userId);
+    List<Sleep> MyInfo(String userId);
 }

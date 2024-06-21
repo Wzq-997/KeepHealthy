@@ -2,7 +2,6 @@ package org.example.keephealthy02.Service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.ibatis.annotations.Param;
 import org.example.keephealthy02.Entity.Sleep;
 import org.example.keephealthy02.Mapper.SleepMapper;
 import org.example.keephealthy02.Service.SleepService;
@@ -10,11 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -52,10 +48,14 @@ public class SleepServiceImpl extends ServiceImpl<SleepMapper, Sleep> implements
     }
 
     @Override
-    public Sleep MyInfo(String userId) {
-        QueryWrapper<Sleep> queryWrapper = new QueryWrapper<>();
+    public List<Sleep> MyInfo(String userId) {
+       /* QueryWrapper<Sleep> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId);
-        Sleep sleep = sleepMapper.selectOne(queryWrapper);
-        return sleep;
+        Sleep sleep = sleepMapper.selectOne(queryWrapper);*/
+        HashMap<String, Object> colMap = new HashMap<>();
+        colMap.put("user_id",userId);
+        List<Sleep> sleeps = sleepMapper.selectByMap(colMap);
+        return sleeps;
+
     }
 }
