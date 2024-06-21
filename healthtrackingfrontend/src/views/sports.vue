@@ -96,7 +96,7 @@ const startTimer = () => {
 //找到运动
 const handleChange = (value)=>{
    selectedSport.value=value
-  console.log("找到运动名")
+  
 }
 
 
