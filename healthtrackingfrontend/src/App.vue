@@ -13,7 +13,7 @@ onBeforeMount(()=>{
   console.log(token)
   if(token==null)
   {
-    router.push("/")
+    router.push("/login")
   }
   else {
     function isTokenExpired(token) {

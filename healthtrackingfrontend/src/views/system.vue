@@ -109,20 +109,6 @@
 import { List, Location } from "@element-plus/icons-vue";
 import axios from "axios";
 import {useUserStore} from "@/store";
-// import {onMounted} from "vue";
-//
-// onMounted(() => {
-//   axios.get('http://localhost:8099/user/lists')
-//       .then(function (response) {
-//         // 处理响应数据
-//         console.log(response)
-//         console.log(response.data);
-//       })
-//       .catch(function (error) {
-//         // 处理错误
-//         console.log(error);
-//       });
-// })
 export default {
   components: { List, Location },
   methods: {
@@ -158,17 +144,17 @@ export default {
     this.admin = admin;
   },
   mounted() {
-    axios
-      .get("http://localhost:8099/user/lists")
-      .then(function (response) {
-        // 处理响应数据
-        console.log(response);
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        // 处理错误
-        console.log(error);
-      });
+    // axios
+    //   .get("http://localhost:8099/user/lists")
+    //   .then(function (response) {
+    //     // 处理响应数据
+    //     console.log(response);
+    //     console.log(response.data);
+    //   })
+    //   .catch(function (error) {
+    //     // 处理错误
+    //     console.log(error);
+    //   });
   },
 };
 </script>

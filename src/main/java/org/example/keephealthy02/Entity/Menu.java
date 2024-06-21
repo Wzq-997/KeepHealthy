@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @TableName("menu")
 public class Menu {
     private String menuId;
+    private String name;
     private String make;
     private String image;
     private String tips;

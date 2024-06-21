@@ -90,66 +90,6 @@ async function login() {
 
 
 
-<!--<script>-->
-<!--import axios from 'axios';-->
-<!--// 注意：你可能不需要从 echarts 导入 error，除非你在组件中使用了 echarts 相关的错误处理-->
-
-<!--export default {-->
-<!--  name: "LoginVue",-->
-<!--  data() {-->
-<!--    return {-->
-<!--      account: "",-->
-<!--      password: "",-->
-<!--    };-->
-<!--  },-->
-<!--  methods: {-->
-<!--    login: async function () {-->
-<!--      if (!this.account || !this.password) {-->
-<!--        alert("请输入账号和密码");-->
-<!--        return;-->
-<!--      }-->
-<!--      console.log(this.account);-->
-<!--      console.log(this.password);-->
-<!--      try {-->
-<!--        const response = await axios.post('http://localhost:8081/main/login'-->
-<!--            , {-->
-<!--          userId: this.account,-->
-<!--          password: this.password-->
-<!--        });-->
-
-<!--        console.log( response.data)-->
-<!--        if (response.data.code==1) {-->
-<!--          // 登录成功，处理后续逻辑-->
-<!--          alert('登录成功');-->
-<!--          // 跳转到主页面-->
-<!--          this.$router.push('/sportwords');-->
-<!--        } else {-->
-<!--          // 登录失败，显示错误信息-->
-<!--          alert(response.data.message);-->
-<!--        }-->
-<!--      } catch (error) {-->
-<!--        if (axios.isAxiosError(error)) { // 确保是 axios 错误-->
-<!--          if (error.code === 'ERR_NETWORK') {-->
-<!--            console.error('网络错误:', error.message);-->
-<!--            alert('登录过程中出现网络错误，请检查你的网络连接');-->
-<!--          } else {-->
-<!--            console.error('Axios 错误:', error.message);-->
-<!--            console.error('响应状态:', error.response?.status);-->
-<!--            console.error('响应数据:', error.response?.data);-->
-<!--            // 根据具体错误代码或状态码显示不同的错误信息给用户-->
-<!--            alert('登录过程中发生错误，请稍后再试');-->
-<!--          }-->
-<!--        } else {-->
-<!--          // 非 axios 错误，可能是其他 JavaScript 错误-->
-<!--          console.error('未知错误:', error);-->
-<!--          alert('登录过程中发生未知错误，请稍后再试');-->
-<!--        }-->
-<!--      }-->
-<!--    }-->
-<!--  }-->
-<!--}-->
-<!--  // ... 其他选项（如 components, computed, 等）-->
-<!--</script>-->
 
 
 <style scoped>
@@ -161,7 +101,7 @@ async function login() {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  //background-image: url(""); /* 背景素材链接 */
+
   background-size: cover;
 }
 .logo {

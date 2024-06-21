@@ -9,6 +9,7 @@ import org.example.keephealthy02.Entity.Result;
 import org.example.keephealthy02.Entity.Userdiet;
 import org.example.keephealthy02.Mapper.UserdietMapper;
 import org.example.keephealthy02.Service.UserdietService;
+import org.example.keephealthy02.Vo.UserDietwithFood;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class UserdietController {
     )
     @PostMapping("/getAlldiet")
     public Result getAll(@RequestParam String userId){
-        List<Userdiet> allUserDiet = userdietService.getAllUserDiet(userId);
+        List<UserDietwithFood> allUserDiet = userdietService.getAllUserDiet(userId);
         return Result.success(allUserDiet);
     }
 

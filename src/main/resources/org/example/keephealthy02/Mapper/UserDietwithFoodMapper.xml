@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：最主要的作用就是绑定mapper.xml与对应那个Mapper接口的关系，要求接口名称为：全限定名 -->
+<mapper namespace="org.example.keephealthy02.Mapper.UserDietwithFoodMapper">
+    <resultMap id="UserDietwithFoodMap" type="org.example.keephealthy02.Vo.UserDietwithFood">
+        <result column="date" property="date"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="consume_calories" property="consumeCalories"></result>
+        <result column="name" property="name"></result>
+    </resultMap>
+    <select id="getUserDietwithFood" resultMap="UserDietwithFoodMap">
+        select ud.date,ud.user_Id,ud.consume_calories,f.name from
+            userdiet ud left join food f
+                                     on
+                                         ud.food_id = f.id
+        where user_id=#{userId}
+        order by ud.date
+    </select>
+</mapper>

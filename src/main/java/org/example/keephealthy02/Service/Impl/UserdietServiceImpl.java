@@ -5,8 +5,10 @@ import org.example.keephealthy02.Entity.Food;
 import org.example.keephealthy02.Entity.Sportrecord;
 import org.example.keephealthy02.Entity.Userdiet;
 import org.example.keephealthy02.Mapper.FoodMapper;
+import org.example.keephealthy02.Mapper.UserDietwithFoodMapper;
 import org.example.keephealthy02.Mapper.UserdietMapper;
 import org.example.keephealthy02.Service.UserdietService;
+import org.example.keephealthy02.Vo.UserDietwithFood;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +22,16 @@ public class UserdietServiceImpl implements UserdietService {
     @Autowired
     private FoodMapper foodMapper;
 
+    @Autowired
+    private UserDietwithFoodMapper usm;
 
 
 
 //    获取所有食谱
     @Override
-    public List<Userdiet> getAllUserDiet(String userId) {
-        QueryWrapper<Userdiet> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",userId);
-        List<Userdiet> userdiets = userdietMapper.selectList(queryWrapper);
-        return userdiets;
+    public List<UserDietwithFood> getAllUserDiet(String userId) {
+        List<UserDietwithFood> userDietwithFood = usm.getUserDietwithFood(userId);
+        return userDietwithFood;
     }
 
 //    插入一个
