@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+<!--    <router-view></router-view>-->
+    <Menu></Menu>
   </div>
 </template>
 <script setup>
@@ -8,6 +9,7 @@ import {useUserStore} from "@/store";
 import router from "@/router";
 import {onBeforeMount, onMounted} from "vue";
 import {jwtDecode} from "jwt-decode";
+import Menu from "@/views/Menu.vue";
 
 onBeforeMount(()=>{
   const token  = localStorage.getItem("token")

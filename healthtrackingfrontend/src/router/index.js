@@ -5,7 +5,6 @@ import sports from "../views/sports.vue";
 import sportwords from "../views/sportwords.vue";
 import {jwtDecode} from "jwt-decode";
 import {useUserStore} from "@/store";
-import healthyStatus from "../views/healthyStatus.vue"
 
 const routes = [
   {
@@ -15,11 +14,6 @@ const routes = [
   },
   {
     path: "/",
-    name: "健康状态",
-    component: healthyStatus,
-  },
-  {
-    path: "/main",
     name: "系统",
     component: system,
     redirect: "/sportwords",
@@ -34,17 +28,8 @@ const routes = [
         name: "自主运动",
         component: sports,
       },
-
     ],
   },
-
-  // {
-  //   path: "/about",
-  //   name: "about",
-  //
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  // },
 ];
 
 const router = createRouter({

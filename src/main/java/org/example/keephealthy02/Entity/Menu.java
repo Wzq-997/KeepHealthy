@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class Menu {
     private String menuId;
     private String name;
+    private String material;
     private String make;
     private String image;
     private String tips;
-    private double calorie;
 }

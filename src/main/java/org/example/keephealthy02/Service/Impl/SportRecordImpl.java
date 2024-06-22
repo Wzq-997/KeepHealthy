@@ -53,10 +53,9 @@ public class SportRecordImpl implements SportRecordService {
         QueryWrapper<User> queryWrapper2 = new QueryWrapper<>();
         queryWrapper2.eq("id",userId);
         User user = userMapper.selectOne(queryWrapper2);
-//        double seconds = lastTime*60;
-//       距离，假设10km/h
+
 //        计算卡路里
-        double calor = (lastTime/7) * 74;
+        double calor = lastTime*0.167 *54;
 
 
         LocalDate dd = LocalDate.now();

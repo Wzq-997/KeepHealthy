@@ -142,7 +142,7 @@ const userId = user.id
 axios.get(`http://localhost:8081/sleep/MyInfo/${userId}`)
     .then(response => {
       // 处理响应数据
-      console.log(response.data.data); // 假设后端返回的数据在 response.data 中
+      console.log(response.data.data);
       userSleeps.value = response.data.data
       for (let i =0;i<userSleeps.value.length;i++)
       {
@@ -179,8 +179,7 @@ axios({
 // 获取用户当天的运动记录
 let userTypes = ref([])
 let yoga =()=>{
-  return "瑜伽"
-}
+/
 let running =()=>{
   return "跑步"
 }
@@ -220,7 +219,7 @@ axios({
     .catch(error => {
       // 请求失败时处理错误
       console.error('Error:', error);
-    }),
+    })
 </script>
 <!--<script>-->
 <!--import { ref,reactive, onMounted, watch, onUnmounted  } from 'vue';-->
