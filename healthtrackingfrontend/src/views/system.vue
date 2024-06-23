@@ -71,8 +71,8 @@
             <el-menu-item><h3 class="menu-title">--健康评估</h3></el-menu-item>
 
             <el-menu-item
-              index="/饮食记录"
-              :class="$route.path == '/饮食记录' ? 'is-active' : ''"
+              index="/healthyStatus"
+              :class="$route.path == '/healthyStatus' ? 'is-active' : ''"
             >
               <el-icon><Bowl /></el-icon>健康状态
             </el-menu-item>

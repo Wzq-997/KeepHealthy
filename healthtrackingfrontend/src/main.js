@@ -1,19 +1,4 @@
-// // import { createApp } from "vue";
-// // import App from "./App.vue";
-// // import router from "./router";
-// // import store from "./store";
 
-// import { createApp } from 'vue'
-// import App from './App.vue'
-// import router from './router'
-// import mitt from 'mitt'
-//
-// const app=createApp(App)
-// app.config.globalProperties.emitter = mitt()
-//
-// app.use(router)
-// app.mount('#app')
-// Vue 3 使用 createApp 和 ElementPlus
 import { createApp } from "vue";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
@@ -22,7 +7,7 @@ import router from "./router";
 import store from "./store";
 import mitt from "mitt";
 import * as echarts from 'echarts';
-
+import {createPinia} from 'pinia';
 // 手动导入并注册你需要的图标
 import {
   Close,
@@ -48,4 +33,6 @@ app.component("Echarts",echarts)
 app.use(ElementPlus);
 app.use(router);
 app.use(store);
+const pinia=createPinia()
+app.use(pinia)
 app.mount("#app");

@@ -2,7 +2,6 @@
   <br>
   <div class="container">
     <div class="lbt" >
-
         <el-carousel style=" height: 600px"
                      motion-blur>
                   <el-carousel-item  class="carousel-item">
@@ -96,10 +95,8 @@ const startTimer = () => {
 //找到运动
 const handleChange = (value)=>{
    selectedSport.value=value
-  
+
 }
-
-
 //更新运动名对应的数据
 const updateData=()=>{
   for(let i=0;i<sports.value.length;i++){
@@ -128,11 +125,6 @@ onUnmounted(() => {
   }
 });
 
-// 注册子组件
-defineExpose({
-
-  // 如果父组件需要向子组件暴露数据或方法，可以在这里定义
-});
 
 </script>
 
@@ -140,7 +132,7 @@ defineExpose({
 .lbt {
   width: 460px;
   height: 500px;
-
+  //box-shadow: 20px 20px  10px 50px rgba(203, 22, 22, 0.5);
 
 }
 .carousel-image{

@@ -5,11 +5,13 @@ import sports from "../views/sports.vue";
 import sportwords from "../views/sportwords.vue";
 import dietRecord from "../views/DietRecordView.vue";
 import dailyDiet from "../views/DailyDietView.vue";
+import healthyStatus from "@/views/healthyStatus.vue";
 const routes = [
   {
     path: "/login",
     name: "登录",
     component: login,
+    //这里的login要去其珈的拉下来
   },
 
   {
@@ -37,6 +39,11 @@ const routes = [
         path: "/dailyDiet",
         name: "健康食谱",
         component: dailyDiet,
+      },
+      {
+        path: "/healthyStatus",
+        name: "健康状态",
+        component: healthyStatus,
       },
     ],
   },
