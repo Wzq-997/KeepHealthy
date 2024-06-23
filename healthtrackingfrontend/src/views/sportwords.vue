@@ -183,11 +183,20 @@ let option = {
 
 <template class="main">
   <!--  轮播图-->
-  <div class="lbt">
+  <div class="lbt" >
     <span class="demonstration"> 运动剪影 </span>
-    <el-carousel height="250px" width="200px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h3 class="small justify-center" text="2xl">{{ item }}</h3>
+    <el-carousel  motion-blur height="300px" width="200px">
+      <el-carousel-item  class="carousel-item">
+        <img src="../img/sports/sw_001.jpg" alt="image" class="carousel-image" >
+      </el-carousel-item>
+      <el-carousel-item class="carousel-item"  >
+        <img src="../img/sports/sw_002.jpg" alt="image" class="carousel-image">
+      </el-carousel-item>
+      <el-carousel-item  class="carousel-item" >
+        <img src="../img/sports/sw_003.jpg" alt="image" class="carousel-image">
+      </el-carousel-item>
+      <el-carousel-item  class="carousel-item" >
+        <img src="../img/sports/sw_004.jpg" alt="image" class="carousel-image">
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -209,19 +218,19 @@ let option = {
       <el-progress
           :format="running"
           :text-inside="true"
-          :stroke-width="16"
+          :stroke-width="23"
           :percentage=userTypes[0] />
       <el-progress
           :format="yoga"
         :text-inside="true"
-        :stroke-width="16"
+        :stroke-width="23"
         :percentage=userTypes[1]
         status="success"
       />
       <el-progress
           :format="swim"
         :text-inside="true"
-        :stroke-width="16"
+        :stroke-width="23"
         :percentage=userTypes[2]
         status="warning"
           color="black"
@@ -229,7 +238,7 @@ let option = {
       <el-progress
           :format="riding"
         :text-inside="true"
-        :stroke-width="16"
+        :stroke-width="23"
         :percentage=userTypes[3]
         status="exception"
       />
@@ -244,12 +253,12 @@ let option = {
 <style scoped>
 .lbt {
   width: 400px;
-  height: 290px;
+  height: 330px;
   background-color: #c6e2ff;
   position: absolute;
   margin-left: 10px;
   //float: left;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 .demonstration {
   color: var(--el-text-color-secondary);
@@ -259,13 +268,15 @@ let option = {
   height: 290px;
   position: absolute;
   background-color: white;
+  margin-top: 30px;
   color: white;
 }
 .tablebox2 {
-  width: 350px;
-  height: 290px;
+  width: 450px;
+  height: 300px;
   position: absolute;
   margin-right: 25px;
+  margin-top: 30px;
   right: 10px;
   background-color: white;
   color: white;
@@ -280,10 +291,17 @@ let option = {
 }
 .sportTable{
   position:fixed;
-  margin-top: 300px;
+  margin-top: 400px;
   margin-left: 200px;
   width: 1000px;
   height: 500px;
   border:1px red;
+}
+.carousel-image{
+  width: 260px;
+  //height: 380px;
+  margin-top: -30px;
+  margin-left: 70px;
+  overflow: hidden;
 }
 </style>

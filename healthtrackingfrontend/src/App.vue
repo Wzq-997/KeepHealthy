@@ -1,10 +1,6 @@
 <template>
   <div id="app">
-<!--    <router-view></router-view>-->
-    <!--    <Menu></Menu>-->
-<!--    <Mine></Mine>-->
-<!--    <HealthyStatus2></HealthyStatus2>-->
-    <Sports></Sports>
+    <router-view></router-view>
   </div>
 </template>
 <script setup>

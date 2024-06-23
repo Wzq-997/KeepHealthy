@@ -158,6 +158,15 @@
           targetweight: form.targetweight,
           past_medical_history: form.past_medical_history,
         });
+        user.name = form.name;
+        user.password=form.newPassword;
+        user.sex = form.sex;
+        user.sex = form.sex;
+        user.height = form.height;
+        user.weight = form.weight;
+        user.targetweight= form.targetweight;
+        user.past_medical_history=form.past_medical_history;
+        console.log(useUserStore().userInfo.weight)
         if (response.status === 200) {
           console.log('用户信息更新成功');
           // 可以在此处处理成功的逻辑，比如刷新页面或显示成功消息

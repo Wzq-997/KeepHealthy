@@ -9,9 +9,9 @@
                 <el-input v-model="form.name"  readonly style="width: 350px"/>
               </el-form-item>
               <el-form-item label="性别">
-                <el-radio-group v-model="form.sex" disabled >
-                  <el-radio value="1" >男</el-radio>
-                  <el-radio value="0" >女</el-radio>
+                <el-radio-group  disabled >
+                  <el-radio value=1 v-model.number="form.sex">男</el-radio>
+                  <el-radio value=0 v-model.number="form.sex">女</el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="身高">
@@ -46,16 +46,17 @@
 
           </el-col>
         </el-row>
-        <el-row style="margin-top: 20px">
-          <el-col :span="12" >
-            <el-card style="margin-right: 20px">
-              <div ref="chartRefBmi" style="width: 100%; height: 42vh;margin-left: 15px"></div>
+        <el-row style="margin-top: 20px;">
+          <el-col :span="12" style="width: 700px" >
+            <el-card style="margin-right: 20px;width: 700px">
+              <div ref="chartRefBmi" style="width: 600px; height: 42vh;margin-left: 15px"></div>
             </el-card>
           </el-col>
-          <el-col :span="12" >
-            <el-card>
-            <div ref="chartRefCalories" style="width: 100%; height: 42vh;margin-left: 15px"></div>
-          </el-card></el-col>
+<!--          <el-col :span="12" >-->
+<!--            <el-card>-->
+<!--              <div ref="chartRefCalories" style="width: 100%; height: 42vh;margin-left: 15px"></div>-->
+<!--            </el-card>-->
+<!--          </el-col>-->
         </el-row>
       </el-main>
       <el-aside class="right">
@@ -79,11 +80,11 @@
                   <rect
                     :x="-110"
                     :y="10"
-                    :width="item.progress + '%'"
+                    :width="item.calories"
                     height="30"
                     rx="15"
                     ry="15"
-                    :fill="item.color"
+                    fill="red"
                   />
                 </svg>
               </div>
@@ -105,7 +106,7 @@
 </template>
 
 <script>
-import { ref,reactive, onMounted, watch, onUnmounted  } from 'vue';
+import { ref,reactive, onMounted, watch, onUnmounted ,shawllowRef } from 'vue';
 import * as echarts from 'echarts';
 import { ElProgress } from 'element-plus';
 import {useUserStore} from "@/store";
@@ -118,7 +119,7 @@ export default {
     const chartRefBmi = ref(null);
     const chartRefCalories = ref(null);
     const chartRefSleeps = ref(null);
-    let myChartSleeps = null;
+    const myCSleep = ref(null);
     const user = useUserStore().userInfo
     const userSleeps = ref()
     const userId = user.id
@@ -161,64 +162,10 @@ export default {
     const sleeps = ref([])
     const healthInfo = ref([])
     const level = ref()
+
     onMounted(() => {
       fetchData();
-      const chartDom = chartRefBmi.value; // 获取 DOM 元素
-      const chartDom2 = chartRefCalories.value;
-      const chartDom3 = chartRefSleeps.value;
-      if (chartDom) {
-        const myChartBmi = echarts.init(chartDom);
-        const myChartCalories = echarts.init(chartDom2);
-        const optionCalories = {
-          title: {
-            text: '每日卡路里消耗',
-            left: 'center'
-          },
-          tooltip: {
-            trigger: 'item'
-          },
-          series: [{
-            name: '卡路里',
-            type: 'pie',
-            radius: '55%',
-            data: caloriesData.value,
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }
-          }]
-        };
-        const optionBmi = {
-          title: {
-            text: 'BMI 曲线图',
-            left: 'center'
-          },
-          tooltip: {
-            trigger: 'axis'
-          },
-          xAxis: {
-            type: 'category',
-            data: bmiData.value.map(item => item.date)
-          },
-          yAxis: {
-            type: 'value',
-            min: 18, // 假设 BMI 正常范围为 18.5-24.9
-            max: 25,
-            boundaryGap: [0, '30%']
-          }
-        };
 
-        myChartBmi.setOption(optionBmi);
-        myChartCalories.setOption(optionCalories);
-
-      }
-      if (chartDom3) {
-        const myChartSleeps = echarts.init(chartDom3);
-        drawChart(myChartSleeps, sleeps.value);
-      }
     });
 
     const fetchData = async () => {
@@ -229,21 +176,35 @@ export default {
               // 处理响应数据
               console.log(response.data.data);
               userSleeps.value = response.data.data
-              console.log("睡眠时间组:" + userSleeps.value)
+              // console.log("睡眠时间组:" + userSleeps.value)
               for (let i = 0; i < userSleeps.value.length; i++) {
                 sleeps.value.push({
                   date: userSleeps.value[i].date,
                   sleepDuration: userSleeps.value[i].timeQuantume
                 })
+
               }
               for (let i = 0; i < userSleeps.value.length; i++) {
                 console.log("获取到的睡眠情况：" + sleeps.value[i].date + "," + sleeps.value[i].sleepDuration)
+              }
+              // =========图表
+              const chartDom3 = chartRefSleeps.value;
+              if (chartDom3) {
+                console.log("被抓到啦==================")
+                const myChartSleeps = echarts.init(chartDom3);
+
+                drawChart(myChartSleeps, sleeps.value);
+                console.log(sleeps.value.length+"===========++++")
+                sleeps.value.forEach((item, index) => {
+                  console.log("sleepDuration:" + item.sleepDuration)
+                })
               }
             })
             .catch(error => {
               // 处理错误
               console.error(error);
             });
+
         // 获取用户的健康分析基础信息
 
        const healthyResponse =await axios({
@@ -255,12 +216,73 @@ export default {
         }).then(respone => {
           if (respone.data.code == 1) {
             console.log("健康情况组：" + respone.data.data.length)
-            healthInfo.value = respone.data.date
+            // healthInfo.value = respone.data.date
             for (let i = 0; i < respone.data.data.length; i++) {
               bmiData.value.push({
                 date: respone.data.data[i].date,
                 bmi: respone.data.data[i].bmi
               })
+              console.log("bmi数据组：" + bmiData.value[i].date + "," + bmiData.value[i].bmi)
+              const chartDom = chartRefBmi.value; // 获取 DOM 元素
+              const chartDom2 = chartRefCalories.value;
+              if (chartDom2)
+              {
+                const myChartCalories = echarts.init(chartDom2);
+                const optionCalories = {
+                  title: {
+                    text: '每日卡路里消耗',
+                    left: 'center'
+                  },
+                  tooltip: {
+                    trigger: 'item'
+                  },
+                  series: [{
+                    name: '卡路里',
+                    type: 'pie',
+                    radius: '55%',
+                    data: caloriesData.value,
+                    emphasis: {
+                      itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                      }
+                    }
+                  }]
+                };
+                myChartCalories.setOption(optionCalories);
+              }
+              if (chartDom) {
+                const myChartBmi = echarts.init(chartDom);
+                const optionBmi = {
+                  title: {
+                    text: 'BMI 曲线图',
+                    left: 'center'
+                  },
+                  tooltip: {
+                    trigger: 'axis'
+                  },
+                  xAxis: {
+                    type: 'category',
+                    data: bmiData.value.map(item =>
+                        {
+                          console.log("bmi:" + item.bmi)
+                          return item.date
+                        }
+                    )
+                  },
+                  yAxis: {
+                    type: 'value'
+                  },
+                  series: [{
+                    data: bmiData.value.map(item => item.bmi),
+                    type: 'line',
+                    smooth: true
+                  }]
+                };
+                myChartBmi.setOption(optionBmi);
+
+              }
             }
             level.value = respone.data.data[respone.data.data.length - 1].healthLevel  //当前的健康等级
             //先把等级表默认为0
@@ -297,68 +319,60 @@ export default {
           }
         }).then(response => {
           if (response.data.code == 1) {
-            console.log("今天的运动记录：" + response.data.data)
+            console.log("今天的运动记录：" + response.data.data[0].sportId)
             for (let i = 0; i < response.data.data.length; i++) {
-              if (response.data.data[i].sportTypes == "S001") {
+              if (response.data.data[i].sportId == "S001") {
                 sports.value.push({
                   sport: "跑步",
-                  calories: response.data.data[i].calories,
-                  progress: response.data.data[i].progress,
-                  color: response.data.data[i].color
+                  calories: response.data.data[i].consumeCalories,
                 })
-              } else if (response.data.data[i].sportTypes == "S002") {
+              } else if (response.data.data[i].sportId == "S002") {
                 sports.value.push(
                     {
                       sport: "瑜伽",
-                      calories: response.data.data[i].calories,
-                      progress: response.data.data[i].progress,
-                      color: response.data.data[i].color
+                      calories: response.data.data[i].consumeCalories,
+
                     }
                 )
-              } else if (response.data.data[i].sportTypes == "S003") {
+              } else if (response.data.data[i].sportId == "S003") {
                 sports.value.push(
                     {
                       sport: "游泳",
-                      calories: response.data.data[i].calories,
-                      progress: response.data.data[i].progress,
-                      color: response.data.data[i].color
+                      calories: response.data.data[i].consumeCalories,
                     }
                 )
-              } else if (response.data.data[i].sportTypes == "S004") {
+              } else if (response.data.data[i].sportId == "S004") {
                 sports.value.push(
                     {
                       sport: "骑行",
-                      calories: response.data.data[i].calories,
-                      progress: response.data.data[i].progress,
-                      color: response.data.data[i].color
+                      calories: response.data.data[i].consumeCalories,
                     }
                 )
-              } else if (response.data.data[i].sportTypes == "S005") {
+              } else if (response.data.data[i].sportId == "S005") {
                 sports.value.push(
                     {
                       sport: "散步",
-                      calories: response.data.data[i].calories,
-                      progress: response.data.data[i].progress,
-                      color: response.data.data[i].color
+                      calories: response.data.data[i].consumeCalories,
                     }
                 )
-              } else if (response.data.data[i].sportTypes == "S006") {
+              } else if (response.data.data[i].sportId == "S006") {
                 sports.value.push(
                     {
                       sport: "攀登",
-                      calories: response.data.data[i].calories,
-                      progress: response.data.data[i].progress,
-                      color: response.data.data[i].color
+                      calories: response.data.data[i].consumeCalories,
                     }
                 )
               }
             }
+            for(let i=0;i<response.data.data.length;i++)
+            {console.log("运动数据组：" + sports.value[i].sport + "," + sports.value[i].calories)}
             // 获取每项运动的卡路里
             for (let i = 0; i < sports.length; i++) {
               caloriesData.value.push({
                 name: sports.value[i].sport,
                 value: sports.value[i].calories
               })
+              console.log("运动数据组：" + caloriesData.value[i].name + "," + caloriesData.value[i].value)
             }
           } else {
             alert("数据获取失败!")
@@ -371,8 +385,10 @@ export default {
       }
     }
     function updateChartSleepsData(newData) {
-      if (myChartSleeps) {
-        myChartSleeps.setOption({
+      console.log("更新新的载体："+myCSleep.value)
+      if (myCSleep.value) {
+        console.log("更新新的载体222："+myCSleep.value)
+        myCSleep.value.setOption({
           yAxis: [{
             data: newData.map(item => item.sleepDuration),
           }],
@@ -388,21 +404,40 @@ export default {
         title: {
           text: '睡眠时间曲线图'
         },
-        tooltip: {},
         xAxis: {
           data: data.map(item => item.date),
           type: 'category',
         },
         yAxis: {
           type: 'value',
-          data: data.map(item => item.sleepDuration),
-        }
+        },
+        series: [{
+          name: '睡眠时间',
+          type: 'line',
+          data: data.map(item => item.sleepDuration), // 正确设置数据系列
+          // 其他配置项，如平滑曲线 smooth: true 等可以根据需要添加
+        }]
       });
-    }
-    watch(sleeps, (newSleeps) => {
-      updateChartSleepsData(newSleeps);
-    });
 
+  }
+    watch(sleeps.value, (newSleeps) => {
+      console.log("测试监听-----")
+      newSleeps.forEach((item, index) => {
+        console.log("监听的变量值："+item.date)
+        console.log("监听的变量值："+item.sleepDuration)
+      })
+      updateChartSleepsData(newSleeps);
+    },{deep:true});
+
+
+    watch(sleeps.value, (newSleeps) => {
+      console.log("测试监听-----")
+      newSleeps.forEach((item, index) => {
+        console.log("监听的变量值："+item.date)
+        console.log("监听的变量值："+item.sleepDuration)
+      })
+      updateChartSleepsData(newSleeps);
+    },{deep:true});
     return {
       chartRefBmi,
       leaderboard,

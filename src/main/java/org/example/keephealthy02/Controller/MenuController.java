@@ -26,4 +26,8 @@ public class MenuController {
         List<Menu> all = menuService.getAll();
         return Result.success(all);
     }
+
+
+
+
 }

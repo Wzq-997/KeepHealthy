@@ -2,28 +2,28 @@
   <br>
   <div class="container">
     <div class="lbt" >
-        <el-carousel style=" height: 600px"
-                     motion-blur>
-                  <el-carousel-item  class="carousel-item">
-                    <img src="../img/sports/run.png" alt="image" class="carousel-image" >
-                  </el-carousel-item>
-                  <el-carousel-item class="carousel-item"  >
-                  <img src="../img/sports/hulaHoop.png" alt="image" class="carousel-image">
-                </el-carousel-item>
-                  <el-carousel-item  class="carousel-item" >
-                    <img src="../img/sports/ride.png" alt="image"class="carousel-image">
-                  </el-carousel-item>
-                  <el-carousel-item  class="carousel-item" >
-                    <img src="../img/sports/skate.png" alt="image" class="carousel-image">
-                  </el-carousel-item>
+      <el-carousel style=" height: 600px"
+                   motion-blur>
+        <el-carousel-item  class="carousel-item">
+          <img src="../img/sports/run.png" alt="image" class="carousel-image" >
+        </el-carousel-item>
+        <el-carousel-item class="carousel-item"  >
+          <img src="../img/sports/hulaHoop.png" alt="image" class="carousel-image">
+        </el-carousel-item>
+        <el-carousel-item  class="carousel-item" >
+          <img src="../img/sports/ride.png" alt="image"class="carousel-image">
+        </el-carousel-item>
+        <el-carousel-item  class="carousel-item" >
+          <img src="../img/sports/skate.png" alt="image" class="carousel-image">
+        </el-carousel-item>
 
-                  <el-carousel-item   class="carousel-item">
-                    <img src="../img/sports/weightLifting.png" alt="image" class="carousel-image" >
-                  </el-carousel-item>
-                <el-carousel-item  class="carousel-item"  >
-                    <img src="../img/sports/skipping.png" alt="image"  class="carousel-image" >
-                  </el-carousel-item>
-                </el-carousel>
+        <el-carousel-item   class="carousel-item">
+          <img src="../img/sports/weightLifting.png" alt="image" class="carousel-image" >
+        </el-carousel-item>
+        <el-carousel-item  class="carousel-item"  >
+          <img src="../img/sports/skipping.png" alt="image"  class="carousel-image" >
+        </el-carousel-item>
+      </el-carousel>
     </div>
 
     <div class="sportsType" style="position: relative;background-color: rgba(161,175,189,0.9)">
@@ -275,7 +275,7 @@ overflow: hidden;
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-bottom: 20px;
+  margin-top: 20px;
 
 }
 

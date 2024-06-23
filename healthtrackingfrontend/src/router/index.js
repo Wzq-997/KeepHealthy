@@ -3,8 +3,11 @@ import login from "../views/login.vue";
 import system from "@/views/system.vue";
 import sports from "../views/sports.vue";
 import sportwords from "../views/sportwords.vue";
+import healthyStatus from "../views/healthyStatus (2).vue"
 import Mine from "../views/Mine.vue"
-import Healthy from "../views/healthyStatus.vue"
+import Advice from "@/views/Advice.vue";
+import DailyDietView from "@/views/DailyDietView.vue";
+import DietRecordView from "@/views/DietRecordView.vue";
 import {jwtDecode} from "jwt-decode";
 import {useUserStore} from "@/store";
 
@@ -19,30 +22,70 @@ const routes = [
     name: "系统",
     component: system,
     redirect: "/sportwords",
+
     children: [
-      {
-        path: "/sportwords",
-        name: "运动处方",
-        component: sportwords,
-      },
-      {
-        path: "/sports",
-        name: "自主运动",
-        component: sports,
-      },
-      {
-        path: "/healthyStatus",
-        name:"/healthyStatus",
-        component: Healthy
-      },
-      {
-        path:"/mine",
-        name:'mine',
-        component: Mine
-      }
-    ],
+  {
+    path: "/sportwords",
+    name: "运动处方",
+    component: sportwords,
   },
-];
+  {
+    path: "/sports",
+    name: "自主运动",
+    component: sports,
+  },
+      {
+        path: "/advice",
+        name: "运动建议",
+        component: Advice,
+        meta: {
+          requiresAuth: true, // 添加此属性，表示此页面需要登录才能访问
+        },
+        beforeEnter: (to, from, next) => {
+          const token = localStorage.getItem('token');
+          if (token) {
+            // 如果token存在，则继续导航到目标页面
+            next();
+          } else {
+            // 如果token不存在，则重定向到登录页面
+            next('/login');
+          }
+
+        }
+        },
+  {
+    path: "/dietRecord",
+    name: "饮食记录",
+    component: DietRecordView,
+  },
+  {
+    path: "/dailyDiet",
+    name: "健康食谱",
+    component: DailyDietView,
+  },
+  {
+    path: "/healthyStatus",
+    name: "健康状态",
+    component: healthyStatus,
+  },{
+      path: "/mine",
+      name: "我的",
+      component: Mine,
+      meta: {
+        requiresAuth: true, // 添加此属性，表示此页面需要登录才能访问
+      },
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+          // 如果token存在，则继续导航到目标页面
+          next();
+        } else {
+          // 如果token不存在，则重定向到登录页面
+      }
+  }
+      }
+  ]
+  }];
 
 const router = createRouter({
   history: createWebHistory(),

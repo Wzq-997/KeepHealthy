@@ -20,84 +20,96 @@
     <el-container>
       <el-aside class="home_aside" width="200px">
         <el-menu
-          router
-          default-active="2"
-          class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
+            router
+            default-active="2"
+            class="el-menu-vertical-demo"
+            @open="handleOpen"
+            @close="handleClose"
         >
           <el-submenu index="1">
             <el-menu-item><h3 class="menu-title">--运动</h3></el-menu-item>
             <!--            <el-menu-item-group title="运动">-->
             <el-menu-item
-              index="/sportwords"
-              :class="$route.path == '/sportwords' ? 'is-active' : ''">
+                index="/sportwords"
+                :class="$route.path == '/sportwords' ? 'is-active' : ''"
+            >
               <el-icon><List /></el-icon>运动处方
             </el-menu-item>
+
             <el-menu-item
-              index="/sports"
-              :class="$route.path == '/sports' ? 'is-active' : ''">
+                index="/sports"
+                :class="$route.path == '/sports' ? 'is-active' : ''"
+            >
               <el-icon><CopyDocument /></el-icon>自主运动
             </el-menu-item>
-            <el-menu-item
-              index="/更换处方"
-              :class="$route.path == '/更换处方' ? 'is-active' : ''">
-              <el-icon><FolderRemove /></el-icon>更换处方
-            </el-menu-item>
-            <!--            </el-menu-item-group>-->
+
           </el-submenu>
 
           <el-submenu index="2">
             <el-menu-item><h3 class="menu-title">--饮食管理</h3></el-menu-item>
 
             <el-menu-item
-              index="/饮食记录"
-              :class="$route.path == '/饮食记录' ? 'is-active' : ''">
+                index="/dietRecord"
+                :class="$route.path == '/dietRecord' ? 'is-active' : ''"
+            >
               <el-icon><Bowl /></el-icon>饮食记录
             </el-menu-item>
             <el-menu-item
-              index="/每日食谱"
-              :class="$route.path == '/每日食谱' ? 'is-active' : ''">
-              <img src="../img/icon/person.png" class="icons" />每日食谱
+                index="/dailyDiet"
+                :class="$route.path == '/dailyDiet' ? 'is-active' : ''"
+            >
+              <img src="../img/icon/食谱-copy.png" class="icons" />每日食谱
             </el-menu-item>
-            <!--            <el-menu-item index="/健康常识" :class="$route.path=='/健康常识'?'is-active':''">-->
-            <!--              <el-icon><Coordinate /></el-icon>健康评估-->
-            <!--            </el-menu-item>-->
+
           </el-submenu>
 
           <el-submenu index="3">
             <el-menu-item><h3 class="menu-title">--健康评估</h3></el-menu-item>
 
             <el-menu-item
-              index="/饮食记录"
-              :class="$route.path == '/饮食记录' ? 'is-active' : ''">
-              <el-icon><Bowl /></el-icon>健康状态
+                index="/healthyStatus"
+                :class="$route.path == '/healthyStatus' ? 'is-active' : ''"
+            >
+              <img src="../img/icon/健康状态.png" class="icons" />健康状态
             </el-menu-item>
             <el-menu-item
-              index="/每日食谱"
-              :class="$route.path == '/每日食谱' ? 'is-active' : ''">
-              <img src="../img/icon/person.png" class="icons" />健康建议
+                index="/advice"
+                :class="$route.path == '/advice' ? 'is-active' : ''"
+            >
+              <img src="../img/icon/健康建议.png" class="icons" />健康建议
             </el-menu-item>
           </el-submenu>
           <el-submenu index="4">
-            <el-menu-item index="/mine"><h3 class="menu-title">--我的</h3></el-menu-item>
+            <el-menu-item><h3 class="menu-title">--个人信息</h3></el-menu-item>
+
+            <el-menu-item
+                index="/mine"
+                :class="$route.path == '/mine' ? 'is-active' : ''"
+            >
+              <img src="../img/icon/person.png" class="icons" />我的
+            </el-menu-item>
+
           </el-submenu>
         </el-menu>
       </el-aside>
-      <!--      elementplus-->
       <el-container>
         <el-main>
           <div class="main" style="margin-top: -20px">
             <el-breadcrumb separator="→">
               <el-breadcrumb-item
-                :to="{ path: '/' }"
-                style="margin-top: 20px; margin-left: 10px">首页</el-breadcrumb-item>
+                  :to="{ path: '/' }"
+                  style="margin-top: 20px; margin-left: 10px"
+              >首页</el-breadcrumb-item
+              >
               <el-breadcrumb-item
-                :to="{ name: $route.name }"
-                style="margin-top: 20px"
-                v-if="$route.name">{{ $route.name }}</el-breadcrumb-item>
-              <!-- 注意：这里假设你的路由有name属性，如果没有，你可能需要展示其他信息或省略这一项 -->
+                  :to="{ name: $route.name }"
+                  style="margin-top: 20px"
+                  v-if="$route.name"
+              >{{ $route.name }}</el-breadcrumb-item
+              >
+
             </el-breadcrumb>
+
             <router-view></router-view>
           </div>
         </el-main>
