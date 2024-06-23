@@ -88,9 +88,18 @@ const tableData = ref([
   <!--  轮播图-->
   <div class="lbt">
     <span class="demonstration"> 运动剪影 </span>
-    <el-carousel height="250px" width="200px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h3 class="small justify-center" text="2xl">{{ item }}</h3>
+    <el-carousel  motion-blur height="300px" width="200px">
+      <el-carousel-item  class="carousel-item">
+        <img src="../img/sports/sw_001.jpg" alt="image" class="carousel-image" >
+      </el-carousel-item>
+      <el-carousel-item class="carousel-item"  >
+        <img src="../img/sports/sw_002.jpg" alt="image" class="carousel-image">
+      </el-carousel-item>
+      <el-carousel-item  class="carousel-item" >
+        <img src="../img/sports/sw_003.jpg" alt="image" class="carousel-image">
+      </el-carousel-item>
+      <el-carousel-item  class="carousel-item" >
+        <img src="../img/sports/sw_004.jpg" alt="image" class="carousel-image">
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -136,7 +145,7 @@ const tableData = ref([
 <style scoped>
 .lbt {
   width: 400px;
-  height: 290px;
+  height: 330px;
   background-color: #c6e2ff;
   position: absolute;
   margin-left: 10px;
@@ -177,5 +186,12 @@ const tableData = ref([
   width: 1000px;
   height: 500px;
   border:1px red;
+}
+.carousel-image{
+  width: 260px;
+  //height: 380px;
+  margin-top: -30px;
+  margin-left: 70px;
+  overflow: hidden;
 }
 </style>
