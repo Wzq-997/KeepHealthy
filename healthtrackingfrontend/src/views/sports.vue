@@ -75,10 +75,8 @@ const sports = ref([
   { sport_id: 'S006', sport_name: '攀登', single_calorie: 5 },
 ]);
 
-
 const xAxisData_name=computed(()=>{
   return sports.value.map(sport => sport.sport_name)
-
 })
 const data1=ref([20,11,30,44,66,55,0]);//绑定数据库各项运动的昨日运动时长
 const data2= ref([11,44,33,55,66,0,99]);//绑定数据库各项运动的今日运动时长
