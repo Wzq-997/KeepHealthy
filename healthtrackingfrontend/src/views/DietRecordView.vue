@@ -18,12 +18,25 @@
         @close="clearForm"
     >
 
-      <el-form :model="form" :rules="rules" label-width="80px" ref="form">
+      <el-form :model="form" :rules="rules" label-width="80px" ref="formRef">
         <el-form-item label="食物" prop="name">
-          <el-input v-model="form.name"></el-input>
+          <!--          修改下拉选择食物-->
+          <el-select
+              v-model="selectedFood"
+              placeholder="点击选择食物"
+              clearable
+          >
+            <el-option style="border-radius: 40px"
+                v-for="item in foods"
+                       :key="item.id"
+                       :label="item.name"
+                       :value="item.id" />
+<!--            <el-option label="苹果" value="食物二" />-->
+          </el-select>
+
         </el-form-item>
-        <el-form-item label="数量" prop="calories">
-          <el-input v-model="form.consumeCalories"></el-input>
+        <el-form-item label="数量" prop="quantity">
+          <el-input v-model="form.quantity"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -39,7 +52,7 @@
 import {onMounted, ref} from 'vue';
 import axios from "axios";
 const userId = ref('U0001')  //用户编号
-const tableData = ref();
+const tableData = ref([]);
 // onMounted(()=>{
 //   axios({
 //     method:'post',
@@ -53,6 +66,15 @@ const tableData = ref();
 //   })
 // })
 
+const foods=ref([
+  {id:'F0001',name:'油炸',calories:120},
+  {id:'F0002',name:'水果',calories:20},
+  {id:'F0003',name:'蔬菜',calories:10},
+  {id:'F0004',name:'海鲜',calories:15},
+  {id:'F0005',name:'烧烤',calories:50}
+])
+let selectedFood=ref()
+const formRef=ref([])
 
 const tableRowClassName = ({ rowIndex }) => {
   if (rowIndex === 1) {
@@ -66,6 +88,7 @@ const tableRowClassName = ({ rowIndex }) => {
 const showDialog = ref(false);
 const form = ref({
   name: '',
+  quantity:'',
   calories: '',
 });
 // 假设我们不需要复杂的验证规则，但你可以根据需要添加
@@ -75,35 +98,41 @@ const rules = {
   ],
   quantity: [
     { required: true, message: '请输入数量', trigger: 'blur' },
-    { type: 'number', message: '卡路里必须是数字', trigger: 'blur' }
+    { type: 'number', message: '数量必须是数字', trigger: 'blur' }
   ],
 };
 
-// 添加表格行的方法
-const addTableRow = () => {
-  // 你可以添加表单验证逻辑，这里为了简化省略了
-  // 假设验证通过，则添加新行
-  const newRow = {
-    id: `F${tableData.value.length + 1}001`, // 假设ID生成逻辑
-    name: form.value.name,
-    calories: form.value.calories,
+function addTableRow() {
+  const calories = calculateCalories(selectedFood.value, form.value.quantity);
+  const newData = {
+    id:foods.value.find(item=>item.id===selectedFood.value)?.id || '',
+    quantity:foods.value.find(item=>item.id===selectedFood.value)?.quantity || '',
+    date: new Date().toISOString().slice(0, 10), // 示例日期
+    name: foods.value.find(item => item.id === selectedFood.value)?.name || '', // 获取食物名称
+    consumeCalories: calories,
   };
-  tableData.value.push(newRow);
-  // 重置表单
-  form.value = {
-    name: '',
-    consumeCalories: '',
-  };
-  // 关闭对话框
-  showDialog.value = false;
-};
+  tableData.value.push(newData);
+  clearForm(); // 添加后清除表单
+  showDialog.value = false; // 关闭对话框
+}
+//计算卡路里
+function calculateCalories(foodId, quantity) {
+  // 根据 foodId 从 foods 数组中找到对应的卡路里，并乘以数量返回
+  const food = foods.value.find(item => item.id === foodId);
+  if (food) {
+    return food.calories * quantity;
+  }
+  return 0; // 如果没有找到对应的食物，返回0卡路里
+}
 
 // 清除表单的方法
 const clearForm = () => {
   form.value = {
     name: '',
+    quantity:'',
     calories: '',
   };
+  selectedFood.value='';
 };
 
 </script>
