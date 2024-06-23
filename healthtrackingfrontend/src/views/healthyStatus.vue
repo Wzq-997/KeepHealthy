@@ -57,12 +57,12 @@
         <el-row style="margin-top: 20px">
           <el-col :span="12" >
             <el-card style="margin-right: 20px">
-              <div ref="chartRefBmi" style="width: 100%; height: 42vh;margin-left: 15px"></div>
+              <div ref="chartRefBmi" style="width: 100%; height: 42vh;"></div>
             </el-card>
           </el-col>
           <el-col :span="12" >
             <el-card>
-            <div ref="chartRefCalories" style="width: 100%; height: 42vh;margin-left: 15px"></div>
+            <div ref="chartRefCalories" style="width: 100%; height: 42vh;"></div>
           </el-card></el-col>
         </el-row>
       </el-main>
