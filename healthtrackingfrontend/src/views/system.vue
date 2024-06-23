@@ -60,11 +60,9 @@
               index="/dailyDiet"
               :class="$route.path == '/dailyDiet' ? 'is-active' : ''"
             >
-              <img src="../img/icon/person.png" class="icons" />每日食谱
+              <img src="../img/icon/食谱-copy.png" class="icons" />每日食谱
             </el-menu-item>
-            <!--            <el-menu-item index="/健康常识" :class="$route.path=='/健康常识'?'is-active':''">-->
-            <!--              <el-icon><Coordinate /></el-icon>健康评估-->
-            <!--            </el-menu-item>-->
+
           </el-submenu>
 
           <el-submenu index="3">
@@ -74,25 +72,29 @@
               index="/healthyStatus"
               :class="$route.path == '/healthyStatus' ? 'is-active' : ''"
             >
-              <el-icon><Bowl /></el-icon>健康状态
+              <img src="../img/icon/健康状态.png" class="icons" />健康状态
             </el-menu-item>
             <el-menu-item
-              index="/每日食谱"
-              :class="$route.path == '/每日食谱' ? 'is-active' : ''"
+              index="/advice"
+              :class="$route.path == '/advice' ? 'is-active' : ''"
             >
-              <img src="../img/icon/person.png" class="icons" />健康建议
+              <img src="../img/icon/健康建议.png" class="icons" />健康建议
             </el-menu-item>
           </el-submenu>
           <el-submenu index="4">
-            <el-menu-item index="/我的"
-              ><h3 class="menu-title">--我的</h3></el-menu-item
+            <el-menu-item><h3 class="menu-title">--个人信息</h3></el-menu-item>
+
+            <el-menu-item
+                index="/mine"
+                :class="$route.path == '/mine' ? 'is-active' : ''"
             >
+              <img src="../img/icon/person.png" class="icons" />我的
+            </el-menu-item>
 
 
           </el-submenu>
         </el-menu>
       </el-aside>
-      <!--      elementplus-->
       <el-container>
         <el-main>
           <div class="main" style="margin-top: -20px">
@@ -108,7 +110,7 @@
                 v-if="$route.name"
                 >{{ $route.name }}</el-breadcrumb-item
               >
-              <!-- 注意：这里假设你的路由有name属性，如果没有，你可能需要展示其他信息或省略这一项 -->
+
             </el-breadcrumb>
 
             <router-view></router-view>

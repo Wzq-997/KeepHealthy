@@ -6,6 +6,8 @@ import sportwords from "../views/sportwords.vue";
 import dietRecord from "../views/DietRecordView.vue";
 import dailyDiet from "../views/DailyDietView.vue";
 import healthyStatus from "@/views/healthyStatus.vue";
+
+import advice from "../views/Advice.vue"
 const routes = [
   {
     path: "/login",
@@ -44,6 +46,12 @@ const routes = [
         path: "/healthyStatus",
         name: "健康状态",
         component: healthyStatus,
+      },
+
+      {
+        path: "/advice",
+        name: "建议",
+        component: advice,
       },
     ],
   },
