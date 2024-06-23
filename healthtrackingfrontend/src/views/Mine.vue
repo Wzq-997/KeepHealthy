@@ -6,15 +6,13 @@
       </div>
       <div v-if="!editing">
         <div>
-          <p><strong>用户昵称：</strong>{{ currentUser.name }}</p>
+          <p><strong>用户昵称：</strong>{{ user.name }}</p>
           <p><strong>密码：</strong>********</p>
-          <p><strong>性别：</strong>{{ currentUser.sex === 1 ? '男' : '女' }}</p>
-          <p><strong>年龄：</strong>{{ currentUser.age }}</p>
-          <p><strong>生日：</strong>{{ formattedBirthday }}</p>
-          <p><strong>身高：</strong>{{ currentUser.height }}cm</p>
-          <p><strong>体重：</strong>{{ currentUser.weight }}kg</p>
-          <p><strong>目标体重：</strong>{{ currentUser.targetweight }}kg</p>
-          <p><strong>过往病史：</strong>{{ currentUser.past_medical_history }}</p>
+          <p><strong>性别：</strong>{{ user.sex === 1 ? '男' : '女' }}</p>
+          <p><strong>身高：</strong>{{ user.height }}cm</p>
+          <p><strong>体重：</strong>{{ user.weight }}kg</p>
+          <p><strong>目标体重：</strong>{{ user.targetweight }}kg</p>
+          <p><strong>过往病史：</strong>{{ user.past_medical_history }}</p>
         </div>
         <el-button type="primary" size="small" @click="editUserInfo">编辑</el-button>
       </div>
@@ -36,20 +34,6 @@
             <el-radio :label="1">男</el-radio>
             <el-radio :label="0">女</el-radio>
           </el-radio-group>
-        </el-form-item>
-        <!-- 生日字段变为可编辑 -->
-        <el-form-item label="生日">
-          <el-date-picker
-              v-model="form.birthday"
-              type="date"
-              placeholder="选择日期"
-              value-format="yyyy-MM-dd"
-              @change="calculateAge"
-          ></el-date-picker>
-        </el-form-item>
-        <!-- 年龄字段在编辑模式下隐藏 -->
-        <el-form-item label="年龄" v-if="false">
-          <el-input v-model="form.age" disabled></el-input>
         </el-form-item>
         <el-form-item label="身高">
           <el-input v-model="form.height"></el-input>
@@ -77,28 +61,20 @@
   import {ref, reactive, computed, onMounted} from 'vue';
   import axios from 'axios';
   import {useRouter} from 'vue-router';
+  import {useUserStore} from "@/store";
+  const user = useUserStore().userInfo
 
+  console.log(user.age+"===")
   const router = useRouter();
 
   const editing = ref(false);
-  const currentUser = ref({
-    name: '张三',
-    sex: 1,
-    age: 25,
-    birthday: '1998-01-01',
-    height: 175,
-    weight: 70,
-    targetweight: 65,
-    past_medical_history: '无',
-  });
 
   const form = reactive({
     name: "test",
     sex: 1,
-    age: "",
-    birthday: "",
     height: "",
     weight: "",
+    age:user.age,
     targetweight: "",
     past_medical_history: "",
     currentPassword: "", // 当前密码
@@ -106,20 +82,16 @@
     confirmNewPassword: "", // 再次输入新密码以确认
   });
 
-  const formattedBirthday = computed(() => {
-    const date = new Date(currentUser.value.birthday);
-    return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
-  });
 
   const editUserInfo = () => {
     editing.value = true;
-    form.name = currentUser.value.name;
-    form.sex = currentUser.value.sex;
-    form.birthday = currentUser.value.birthday;
-    form.height = currentUser.value.height;
-    form.weight = currentUser.value.weight;
-    form.targetweight = currentUser.value.targetweight;
-    form.past_medical_history = currentUser.value.past_medical_history;
+    form.name = user.name;
+    form.sex = user.sex;
+    form.height = user.height;
+    form.age = user.age
+    form.weight = user.weight;
+    form.targetweight = user.targetweight;
+    form.past_medical_history = user.past_medical_history;
   };
 
   // 取消编辑
@@ -150,103 +122,81 @@
     }
 
     // 旧密码验证逻辑
-    const isOldPasswordValid = await validateOldPassword(form.currentPassword);
+    const isOldPasswordValid = () => {
+      if (form.currentPassword === user.password) {
+        return true;
+      } else
+        return false;
+    };
     if (!isOldPasswordValid) {
       alert('当前密码错误，请重新输入！');
       return;
     }
     try {
       const userDataToUpdate = {
+        id: user.id,
         name: form.name,
+        password: form.newPassword,
         sex: form.sex,
-        birthday: form.birthday,
-        age: calculateAge(),
+        age: form.age,
         height: form.height,
         weight: form.weight,
         targetweight: form.targetweight,
         past_medical_history: form.past_medical_history,
       };
 
-      // 获取token
-      const token = localStorage.getItem('token');
-      if (!token) {
-        console.error('Token not found');
-        return;
+      console.log("年龄："+user.age)
+      try {
+        const response = await axios.post('http://localhost:8081/updateById', {
+          id: user.id,
+          name: form.name,
+          password: form.newPassword,
+          sex: form.sex,
+          age: user.age,
+          height: form.height,
+          weight: form.weight,
+          targetweight: form.targetweight,
+          past_medical_history: form.past_medical_history,
+        });
+        if (response.status === 200) {
+          console.log('用户信息更新成功');
+          // 可以在此处处理成功的逻辑，比如刷新页面或显示成功消息
+        } else {
+          throw new Error(`更新用户信息失败，服务器返回${response.status}状态码`);
+        }
+      } catch (error) {
+        console.error('保存用户信息失败', error);
+      } finally {
+        // 清空密码字段
       }
-
-      // 发送PUT请求更新用户信息
-      const response = await axios.post('http://localhost:8081/main/update', userDataToUpdate, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.status === 200) {
-        console.log('用户信息更新成功');
-        // 可以在此处处理成功的逻辑，比如刷新页面或显示成功消息
-      } else {
-        throw new Error(`更新用户信息失败，服务器返回${response.status}状态码`);
-      }
-    } catch (error) {
-      console.error('保存用户信息失败', error);
-    } finally {
-      // 清空密码字段
       editing.value = false;
       form.currentPassword = '';
       form.newPassword = '';
       form.confirmNewPassword = '';
+    }catch (err)
+    {
+      console.log(err)
     }
-  };
-
-// 生日变化时重新计算年龄
-  const calculateAge = () => {
-    if (form.birthday) {
-      const today = new Date();
-      const birthDate = new Date(form.birthday);
-      let age = today.getFullYear() - birthDate.getFullYear();
-      if (today.getMonth() < birthDate.getMonth() || (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      form.age = age; // 更新表单中的年龄
-    }
-  };
-
+  }
   // 使用token从服务器获取用户信息
   onMounted(async () => {
-    const token = "eyJhbGciOiJIUzI1NiJ9.eyJ0YXJnZXR3ZWlnaHQiOjYwLjAsIm5hbWUi" +
-        "OiLlvKDkuIkiLCJ3ZWlnaHQiOjgwLjAsImlkIjoiVTAwMDEiLCJwYXN0TWVkaWNhbEh" +
-        "pc3RvcnkiOiJudWxsIiwiaGVpZ2h0IjoxODAuMCwiZXhwIjoxNzE5MDY3MDExfQ.RoF" +
-        "xr6wifN_qAY9NNiprO2ccnYsORd-GHS_zX-rT6ok"; // 获取token
-    if (!token) {
-      console.error('没有找到token');
-      return;
-    }
+    // 初始化表单数据
+    form.name = user.name;
+    form.age  = user.age;
+    form.sex = user.sex;
+    form.height = user.height;
+    form.weight = user.weight;
+    form.targetweight = user.targetweight;
+    form.past_medical_history = user.past_medical_history;
 
-    try {
-      const response = await axios.get('', {
-        headers: {
-          Authorization: `Bearer ${token}`, // 根据你的API要求调整认证头格式
-        },
-      });
-
-      if (response.status === 200) {
-        currentUser.value = response.data;
-        // 初始化表单数据
-        form.name = currentUser.value.name;
-        form.sex = currentUser.value.sex;
-        form.birthday = currentUser.value.birthday;
-        calculateAge();
-        form.height = currentUser.value.height;
-        form.weight = currentUser.value.weight;
-        form.targetweight = currentUser.value.targetweight;
-        form.past_medical_history = currentUser.value.past_medical_history;
-      } else {
-        console.error('获取用户信息失败，服务器返回非200状态码');
-      }
-    } catch (error) {
-      console.error('获取用户信息失败', error);
-    }
-  });
+  })
+    //   } else {
+    //     console.error('获取用户信息失败，服务器返回非200状态码');
+    //   }
+    // } catch (error) {
+    //   console.error('获取用户信息失败', error);
+    // }
+    //   }
 </script>
 
 <style scoped>

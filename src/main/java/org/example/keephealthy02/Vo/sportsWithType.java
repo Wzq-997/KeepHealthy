@@ -11,7 +11,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class sportsWithType {
 //    获取运动记录，运动记录和运动种类联合查询
       private LocalDate date;

@@ -71,34 +71,28 @@ public class SportrecordController {
     }
 
 //    获取所有的用户运动记录
-    @ApiOperation(value = "获取指定用户的运动记录")
+//    @ApiOperation(value = "获取指定用户的运动记录")
+//    @ApiImplicitParam(
+//            name = "userId",
+//            value = "用户id",
+//            required = true
+//    )
+//    @PostMapping("/getSportRecord")
+//    public Result getSportRecord(@RequestParam String userId) {
+//        System.out.println(userId);
+//        User user = userService.selectById(userId);
+//        if(user==null)
+//            return Result.error("用户不存在");
+//        List<sportsWithType> sport = sportRecordService.getSport(userId);
+//        return Result.success(sport);
+//    }
+    //获取今天的运动记录
+    @ApiOperation(value = "获取今天的运动记录")
     @ApiImplicitParam(
             name = "userId",
             value = "用户id",
             required = true
     )
-    @PostMapping("/getSportRecord")
-    public Result getSportRecord(@RequestParam String userId) {
-        System.out.println(userId);
-        User user = userService.selectById(userId);
-        if(user==null)
-            return Result.error("用户不存在");
-        List<sportsWithType> sport = sportRecordService.getSport(userId);
-        return Result.success(sport);
-    }
-    //获取单条运动记录
-    @ApiOperation(value = "获取今天的运动记录")
-    @ApiImplicitParams({
-            @ApiImplicitParam(
-                    name = "userId",
-                    value = "用户id",
-                    required = true
-            ),
-            @ApiImplicitParam(
-                    name = "date",
-                    value = "日期",
-                    required = true
-            )})
     @GetMapping("/getSportRecordOne")
     public Result getSportRecordOne(@RequestParam String userId) {
         LocalDate now = LocalDate.now();
@@ -136,5 +130,4 @@ class SportTypes{
     private double totalconCar;
     private double totallastTime;
     private LocalDate date;
-
 }

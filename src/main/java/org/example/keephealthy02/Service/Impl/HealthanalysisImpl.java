@@ -10,6 +10,7 @@ import org.example.keephealthy02.Service.UserdietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -58,31 +59,36 @@ public class HealthanalysisImpl implements HealthanalysisService {
             level=1;
        }
 //        根据所摄入、所消耗的卡路里，以及bmi计算健康等级,并且更新
-        Healthyanalysis healthyanalysis = new Healthyanalysis(user.getId(),BMI, level);
-        QueryWrapper<Healthyanalysis> query1 = new QueryWrapper<>();
-        query1.eq("user_id",user.getId());
-        return healthyanalysisMapper.update(healthyanalysis,query1);
+        Healthyanalysis healthyanalysis = new Healthyanalysis(LocalDate.now(),user.getId(),BMI, level);
+       LocalDate date = LocalDate.now();
+       if(healthyanalysisMapper.selectOne(new QueryWrapper<Healthyanalysis>().eq("user_id",user.getId()).eq("date",date))==null)
+           return healthyanalysisMapper.insert(healthyanalysis);
+       else
+       {
+           return healthyanalysisMapper.update(healthyanalysis, new QueryWrapper<Healthyanalysis>().eq("user_id", user.getId()).eq("date", date));
+       }
     }
 
     @Override
-    public Healthyanalysis getHealthLevle(String userId){
+    public List<Healthyanalysis> getHealthLevle(String userId){
         QueryWrapper<Healthyanalysis> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id",userId);
-        return healthyanalysisMapper.selectOne(queryWrapper);
+        queryWrapper.orderByAsc("date"); //根据日期升序
+        return healthyanalysisMapper.selectList(queryWrapper);
     }
     public Integer countHealthLevel(User user,double intakeCalories,double burnedCalories){
         // 计算BMR（基础代谢率）
-        double bmr;
+        double bmi;
 
         if (user.getSex()==0) {
-            bmr = (WEIGHT_MULTIPLIER * user.getWeight()) + (HEIGHT_MULTIPLIER * user.getHeight()) - (AGE_MULTIPLIER * user.getAge()) + 5;
+            bmi = (WEIGHT_MULTIPLIER * user.getWeight()) + (HEIGHT_MULTIPLIER * user.getHeight()) - (AGE_MULTIPLIER * user.getAge()) + 5;
         } else {
-            bmr = (WEIGHT_MULTIPLIER * user.getWeight()) + (HEIGHT_MULTIPLIER * user.getHeight()) - (AGE_MULTIPLIER * user.getAge()) - 161;
+            bmi = (WEIGHT_MULTIPLIER * user.getWeight()) + (HEIGHT_MULTIPLIER * user.getHeight()) - (AGE_MULTIPLIER * user.getAge()) - 161;
         }
 
         // 计算每日总能量消耗
-        double tdee = bmr + burnedCalories;
-
+        double tdee = bmi + burnedCalories;
+        System.out.println(bmi);
         // 计算卡路里平衡
         double calorieBalance = intakeCalories - tdee;
 

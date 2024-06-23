@@ -80,7 +80,7 @@
             </el-menu-item>
           </el-submenu>
           <el-submenu index="4">
-            <el-menu-item index="/我的"><h3 class="menu-title">--我的</h3></el-menu-item>
+            <el-menu-item index="/mine"><h3 class="menu-title">--我的</h3></el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -120,7 +120,8 @@ export default {
         type: "warning",
       }).then(function () {
         localStorage.removeItem("token");
-        _this.$router.replace({ path: "/login" });
+        console.log(localStorage.getItem("token"))
+        _this.$router.push('/login');
       });
     },
     handleOpen(key, keyPath) {

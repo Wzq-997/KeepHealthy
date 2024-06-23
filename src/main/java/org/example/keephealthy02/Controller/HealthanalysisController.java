@@ -23,7 +23,7 @@ public class HealthanalysisController {
     HealthanalysisImpl healthyanalysis;
 
     @RequestMapping(value = "/getHealthyDate",method = RequestMethod.GET)
-    @ApiOperation(value = "获取健康等级")
+    @ApiOperation(value = "获取健康情况")
     @ApiImplicitParams({
             @ApiImplicitParam(
                     name = "userId",
@@ -32,7 +32,7 @@ public class HealthanalysisController {
             )
     })
         public Result getHealthLevle(@RequestParam String userId){
-            Healthyanalysis healthLevle = healthyanalysis.getHealthLevle(userId);
+            List<Healthyanalysis> healthLevle = healthyanalysis.getHealthLevle(userId);
             return  Result.success(healthLevle);
     }
 

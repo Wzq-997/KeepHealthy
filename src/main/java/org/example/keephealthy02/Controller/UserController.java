@@ -25,7 +25,7 @@ public class UserController {
         return Result.success(this.userService.list());
     }
     @ApiOperation(value = "修改")
-    @PutMapping("/updateById")
+    @PostMapping("/updateById")
     public Result updateById(@RequestBody User user){
         this.userService.update(user);
 //        用户信息修改时，更新健康等级

@@ -13,7 +13,7 @@ public interface HealthanalysisService {
     //根据用户信息计算bmi和健康信息
     Integer updateHealthData(User user);
     //获取用户的健康等级
-    Healthyanalysis getHealthLevle(String userId);
+    List<Healthyanalysis> getHealthLevle(String userId);
     //获取一定时间内的健康信息
     List<Healthyanalysis> getListHealthyData(User user, Date startDate, Date endDate);
 }

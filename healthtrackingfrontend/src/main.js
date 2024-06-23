@@ -6,7 +6,7 @@ import App from "./App.vue";
 import router from "./router";
 import mitt from "mitt";
 import * as echarts from 'echarts';
-import { createPinia } from 'pinia';
+import {createPinia} from 'pinia';
 // 手动导入并注册你需要的图标
 import {
   Close,
@@ -31,8 +31,7 @@ app.component("Coordinate", Coordinate);
 app.component("Echarts",echarts)
 app.use(ElementPlus);
 app.use(router);
-
-const pinia = createPinia();
-app.use(pinia);
+// app.use(store);
+const pinia=createPinia()
+app.use(pinia)
 app.mount("#app");
-

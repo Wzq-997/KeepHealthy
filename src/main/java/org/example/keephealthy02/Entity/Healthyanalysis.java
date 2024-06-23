@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Data
 @NoArgsConstructor
@@ -12,6 +13,7 @@ import java.util.Date;
 @TableName("healthyanalysis")
 public class Healthyanalysis {
 
+    private LocalDate date;
     private String userId;
 
     private double bmi;

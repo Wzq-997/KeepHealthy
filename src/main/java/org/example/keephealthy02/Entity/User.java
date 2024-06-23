@@ -16,7 +16,7 @@ public class User {
     private String id;
 
     private String name;
-
+    private Integer age;
     private String password;
 
     private Integer sex;
@@ -28,5 +28,5 @@ public class User {
     private Double targetweight;
 
     private String  pastMedicalHistory;
-    private Integer age;
+
 }

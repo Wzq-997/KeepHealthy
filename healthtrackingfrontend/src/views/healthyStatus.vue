@@ -132,94 +132,94 @@
 <!--  </div>-->
 </template>
 <script setup>
-import axios from "axios";
-import {useUserStore} from "@/store";
-import {ref} from 'vue'
-const sleeps= ref([])
-const user = useUserStore().userInfo
-const userSleeps = ref(null)
-const userId = user.id
-axios.get(`http://localhost:8081/sleep/MyInfo/${userId}`)
-    .then(response => {
-      // 处理响应数据
-      console.log(response.data.data);
-      userSleeps.value = response.data.data
-      for (let i =0;i<userSleeps.value.length;i++)
-      {
-        sleeps.value.push({
-                date:userSleeps.value[i].date,
-                sleepDuration:userSleeps.value[i].timeQuantume
-            })
-      }
-    })
-    .catch(error => {
-      // 处理错误
-      console.error(error);
-    });
-// 获取用户的健康分析基础信息
-const healthInfo = ref()
-const level =ref()
-axios({
-  method: 'get',
-  url: 'http://localhost:8081//healthyanalysis/getHealthyDate',
-  params:{
-    userId:userId
-  }
-}).then(respone=>{
-      console.log(respone.data.data)
-      healthInfo.value=respone.data.date
-      level.value = healthInfo.value.healthLevel
-}).catch(err)
-{
-  console.log(err)
-}
-// 获取用户的基本信息，从pinia存储中获取
-
-
-// 获取用户当天的运动记录
-let userTypes = ref([])
-let yoga =()=>{
-/
-let running =()=>{
-  return "跑步"
-}
-let riding = ()=>{
-  return "骑行"
-}
-let swim = ()=>{
-  return "游泳"
-}
-
-axios({
-  method: 'get',
-  url: 'http://localhost:8081/sport/getSportRecordOne',
-  params:{
-    userId:userId
-  }
-})
-    .then(response => {
-      // 请求成功时处理响应数据
-      let array = response.data.data
-      if(array.length==0)
-      {
-        console.log("没有1")
-      }
-      else {
-        console.log(array[0].sportTypes);
-        for (let i = 0; i < array.length; i++) {
-          const sportId = array[i].sportId;
-          const index = sportId.slice(1) - 1; // 假设 sportId 为 'S001', 'S002' 等，转换为索引 0, 1, ...
-          if (index >= 0 && index < 7) { // 确保索引在有效范围内
-            let pers = array[i].consumeCalories / 74 * 8;
-            userTypes.value[index] = pers; // 更新 userTypes
-          }
-        }
-      }
-    })
-    .catch(error => {
-      // 请求失败时处理错误
-      console.error('Error:', error);
-    })
+// import axios from "axios";
+// import {useUserStore} from "@/store";
+// import {ref} from 'vue'
+// const sleeps= ref([])
+// const user = useUserStore().userInfo
+// const userSleeps = ref(null)
+// const userId = user.id
+// axios.get(`http://localhost:8081/sleep/MyInfo/${userId}`)
+//     .then(response => {
+//       // 处理响应数据
+//       console.log(response.data.data);
+//       userSleeps.value = response.data.data
+//       for (let i =0;i<userSleeps.value.length;i++)
+//       {
+//         sleeps.value.push({
+//                 date:userSleeps.value[i].date,
+//                 sleepDuration:userSleeps.value[i].timeQuantume
+//             })
+//       }
+//     })
+//     .catch(error => {
+//       // 处理错误
+//       console.error(error);
+//     });
+// // 获取用户的健康分析基础信息
+// const healthInfo = ref()
+// const level =ref()
+// axios({
+//   method: 'get',
+//   url: 'http://localhost:8081//healthyanalysis/getHealthyDate',
+//   params:{
+//     userId:userId
+//   }
+// }).then(respone=>{
+//       console.log(respone.data.data)
+//       healthInfo.value=respone.data.date
+//       level.value = healthInfo.value.healthLevel
+// }).catch(err)
+// {
+//   console.log(err)
+// }
+// // 获取用户的基本信息，从pinia存储中获取
+//
+//
+// // 获取用户当天的运动记录
+// let userTypes = ref([])
+// let yoga =()=>{
+// /
+// let running =()=>{
+//   return "跑步"
+// }
+// let riding = ()=>{
+//   return "骑行"
+// }
+// let swim = ()=>{
+//   return "游泳"
+// }
+//
+// axios({
+//   method: 'get',
+//   url: 'http://localhost:8081/sport/getSportRecordOne',
+//   params:{
+//     userId:userId
+//   }
+// })
+//     .then(response => {
+//       // 请求成功时处理响应数据
+//       let array = response.data.data
+//       if(array.length==0)
+//       {
+//         console.log("没有1")
+//       }
+//       else {
+//         console.log(array[0].sportTypes);
+//         for (let i = 0; i < array.length; i++) {
+//           const sportId = array[i].sportId;
+//           const index = sportId.slice(1) - 1; // 假设 sportId 为 'S001', 'S002' 等，转换为索引 0, 1, ...
+//           if (index >= 0 && index < 7) { // 确保索引在有效范围内
+//             let pers = array[i].consumeCalories / 74 * 8;
+//             userTypes.value[index] = pers; // 更新 userTypes
+//           }
+//         }
+//       }
+//     })
+//     .catch(error => {
+//       // 请求失败时处理错误
+//       console.error('Error:', error);
+//     })
 </script>
 <!--<script>-->
 <!--import { ref,reactive, onMounted, watch, onUnmounted  } from 'vue';-->

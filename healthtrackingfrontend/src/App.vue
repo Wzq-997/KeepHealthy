@@ -1,7 +1,10 @@
 <template>
   <div id="app">
 <!--    <router-view></router-view>-->
-    <Menu></Menu>
+    <!--    <Menu></Menu>-->
+<!--    <Mine></Mine>-->
+<!--    <HealthyStatus2></HealthyStatus2>-->
+    <Sports></Sports>
   </div>
 </template>
 <script setup>
@@ -9,7 +12,9 @@ import {useUserStore} from "@/store";
 import router from "@/router";
 import {onBeforeMount, onMounted} from "vue";
 import {jwtDecode} from "jwt-decode";
-import Menu from "@/views/Menu.vue";
+import Mine from "@/views/Mine.vue";
+import HealthyStatus2 from "@/views/healthyStatus (2).vue";
+import Sports from "@/views/sports.vue";
 
 onBeforeMount(()=>{
   const token  = localStorage.getItem("token")
@@ -21,7 +26,10 @@ onBeforeMount(()=>{
   else {
     function isTokenExpired(token) {
       try {
+
         const decoded = jwtDecode(token); // 使用jwt-decode库或类似的库来解码JWT
+        console.log("exp:"+decoded.exp)
+        console.log("now:"+Date.now() / 1000)
         if (decoded.exp < Date.now() / 1000) {
           console.log("exp:"+decoded.exp)
           console.log("now:"+Date.now() / 1000)
@@ -41,6 +49,7 @@ onBeforeMount(()=>{
     }
     else
     {
+
       const user = useUserStore()
       user.setToken(token)
       console.log(user.userInfo)

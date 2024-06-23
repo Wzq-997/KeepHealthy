@@ -12,8 +12,6 @@ import org.example.keephealthy02.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,8 +54,9 @@ public class LoginController {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id",user.getId());
         claims.put("name",user.getName());
-//        claims.put("password",user.getPassword());
+        claims.put("sex",user.getSex());
         claims.put("height",user.getHeight());
+        claims.put("age",user.getAge());
         claims.put("weight",user.getWeight());
         claims.put("targetweight",user.getTargetweight());
         claims.put("pastMedicalHistory", user.getPastMedicalHistory());
@@ -125,36 +124,5 @@ public class LoginController {
             userServiceImpl.insert(user);
             return new Result(0, "注册成功", LocalDateTime.now());
         }
-    }
-
-    /**
-     *
-     * @param user 要求更新的用户
-     * @param response
-     * @param token 需要携带jwt进行验证
-     * @return
-     */
-    @ApiOperation(value = "验证用户是否已经登录成功")
-    @RequestMapping(value = "/update",method = RequestMethod.PUT)
-    public Result update(@RequestBody User user,HttpServletResponse response,@RequestHeader("Authorization") String token){
-        // 检查用户是否登录，验证 JWT
-        if (JwtUtils.isTokenExpired(token)) {
-            return new Result(1, "用户未登录或登录状态已过期",LocalDateTime.now());
-        }
-
-        // 更新用户信息
-        userServiceImpl.update(user);
-
-        // 在响应头中设置或更新 JWT
-        String newToken = JwtUtils.generateJwt(generateClaim(user)); // 生成新的 JWT
-        response.setHeader("Authorization", newToken); // 设置响应头中的 Authorization 字段
-
-        // 设置或更新 Cookie
-        Cookie jwtCookie = new Cookie("jwt", newToken);
-        jwtCookie.setPath("/");
-        jwtCookie.setMaxAge(3600); // 设置 cookie 过期时间，这里设置为 1 小时
-        response.addCookie(jwtCookie); // 添加到响应中
-
-        return new Result(0, "用户信息更新成功",LocalDateTime.now());
     }
 }
